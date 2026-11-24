@@ -108,3 +108,40 @@ body.dark .acc summary{color:#ffb3c3}
 .note{margin-top:24px;text-align:left;border-left:6px solid var(--red)}
 textarea{resize:vertical}
 nav{align-items:center}
+
+/* ---- rich auth ---- */
+.auth{display:grid;grid-template-columns:1.1fr 1fr;min-height:calc(100vh - 56px)}
+.aart{position:relative;overflow:hidden;background:radial-gradient(circle at 30% 20%,#b01030,#7a0f2e 55%,#4a0719);color:#fff;min-height:620px}
+.aart>*{position:absolute}
+.aart .petal{z-index:1}
+.emo{z-index:1;animation:floaty 6s ease-in-out infinite;opacity:.85}
+@keyframes floaty{50%{transform:translateY(-18px) rotate(10deg)}}
+.abrand{position:relative!important;z-index:4;padding:36px 8%}
+.alogo{width:64px}
+.abrand h1{color:#fff;font-size:clamp(2.3rem,4.5vw,3.6rem);margin:8px 0 4px}
+.achips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.achips span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);padding:5px 14px;border-radius:20px;font-weight:700;font-size:.88rem}
+.a-cup{left:50%;bottom:4%;width:300px;margin-left:-150px;z-index:3}
+.a-gl1{left:5%;bottom:7%;width:115px;z-index:3}
+.a-gl2{right:5%;bottom:9%;width:105px;z-index:3}
+.a-fl1{left:-40px;top:42%;width:150px;z-index:2}
+.a-fl2{right:-25px;top:26%;width:110px;z-index:2}
+.a-fl3{left:12%;bottom:44%;width:56px;z-index:2}
+.a-lf{right:22%;bottom:2%;width:50px;z-index:2}
+.aform{background:linear-gradient(160deg,#fff0f3,#fff);display:flex;align-items:center;padding:40px 6%;color:#3a0a18}
+.ainner{width:100%;max-width:440px;margin:auto}
+.aform h2{font-size:2rem;color:var(--wine)}
+.sub{margin:6px 0 4px}
+.atabs{display:flex;background:var(--pink);border-radius:30px;padding:5px;margin-bottom:22px}
+.atabs a{flex:1;text-align:center;padding:9px;border-radius:25px;font-weight:700;color:var(--wine)}
+.atabs a.on{background:var(--wine);color:#fff;box-shadow:0 4px 12px rgba(122,15,46,.3)}
+.aform label{display:block;font-weight:700;margin:14px 0 4px}
+.pw{position:relative}
+.pw input{padding-right:46px}
+.eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;font-size:1.2rem}
+.btn.wide{width:100%;margin-top:6px;font-size:1.05rem;padding:13px}
+.meter{height:8px;background:var(--pink);border-radius:8px;margin-top:8px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;border-radius:8px;transition:.3s}
+.alt-link{text-align:center;margin-top:16px}
+.alt-link a{color:var(--red);font-weight:800}
+@media(max-width:800px){.auth{grid-template-columns:1fr}.aart{min-height:560px}.a-cup{width:240px;margin-left:-120px}}

@@ -258,6 +258,37 @@ after.contact=()=>$('#cb').onclick=()=>{const t=$('#cm2').value.trim();if(t.leng
 /* ---- Profile additions ---- */
 function accountHTML(m){const p=m.points||0,w=wl();return `<h3 style="margin-top:22px">My account</h3><div class="row"><span>Petal points</span><b>${p} (${tier(p)})</b></div><div class="row"><span>Subscription</span><b>${m.plan||'None'}</b></div><div class="row"><span>Wishlist</span><b>${w.length?w.join(', '):'Empty. Tap the heart on a tea.'}</b></div><h3 style="margin-top:18px">My orders</h3>${(m.orders||[]).length?m.orders.slice(0,5).map(o=>`<div class="row"><span>${o.id} <small>${o.date}</small></span><b>${rs(o.total)}</b></div>`).join(''):'<p>No orders yet.</p>'}`}
 
+/* ================= RICH LOGIN / REGISTER ================= */
+const authArt=()=>{let p='',e='';
+ for(let i=0;i<14;i++)p+=`<div class="petal" style="left:${Math.random()*100}%;animation-duration:${7+Math.random()*8}s;animation-delay:-${Math.random()*10}s;width:${16+Math.random()*16}px">${flower(i%2?'#f7b6c2':'#ff5f7e','#7a0f2e')}</div>`;
+ ['🌺','🍵','🧊','🍋','🌿','🍯','🫖','🥤','🌸','🍓'].forEach((x,i)=>e+=`<span class="emo" style="left:${4+i*9.5}%;top:${(8+i*29)%70}%;animation-delay:-${i*.7}s;font-size:${1.4+(i%3)*.5}rem">${x}</span>`);
+ return `<div class="aart">${p}${e}
+ <div class="abrand"><div class="alogo">${flower('#f7b6c2','#fff')}</div><h1>Hibiscus Tea</h1><p>A natural sip of freshness 🌺</p>
+ <div class="achips"><span>🍵 6 flavours</span><span>🧊 Cold drinks</span><span>🎁 Gift packs</span><span>⏱️ Brew timer</span><span>🎨 Custom packs</span></div></div>
+ <div class="a-fl1 spin">${flower()}</div><div class="a-fl2 sway">${flower('#e0587a')}</div><div class="a-fl3 spin">${flower('#f06a86')}</div>
+ <div class="a-gl1 bob">${glass('#d6203f','#f7b6c2','lemon')}</div><div class="a-cup bob">${cup('#b01030','',true)}</div><div class="a-gl2 sway">${glass('#9c1038','#f7b6c2','mint')}</div><div class="a-lf">${leaf('sway')}</div></div>`};
+const authShell=(mode,body)=>`<div class="auth">${authArt()}<div class="aform"><div class="ainner"><div class="atabs"><a href="#/login" class="${mode==='login'?'on':''}">Log in</a><a href="#/register" class="${mode==='register'?'on':''}">Register</a></div>${body}</div></div></div>`;
+const pw=(id,ph,ac)=>`<div class="pw"><input id="${id}" type="password" placeholder="${ph}" autocomplete="${ac}"><button type="button" class="eye" aria-label="Show or hide password" onclick="const i=this.previousElementSibling;i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button></div>`;
+pages.login=()=>authShell('login',`<h2>Welcome back 🍵</h2><p class="sub">Log in to continue your tea journey.</p>
+<label for="e">📧 Email</label><input id="e" type="email" placeholder="you@example.com" autocomplete="email" value="${localStorage.ht_rem||''}">
+<label for="p">🔒 Password</label>${pw('p','Your password','current-password')}
+<div class="row" style="border:0"><label style="margin:0;font-weight:600"><input type="checkbox" id="rm" style="width:auto" ${localStorage.ht_rem?'checked':''}> Remember my email</label></div>
+<button class="btn wide" id="lb">Log in 🌺</button><div class="msg" id="m"></div>
+<p class="alt-link">New here? <a href="#/register">Create a free account</a></p>`);
+pages.register=()=>authShell('register',`<h2>Join Hibiscus Tea 🌺</h2><p class="sub">Create your account and get <b>10% off</b> with code <b>WELCOME10</b>.</p>
+<label for="n">👤 Full name</label><input id="n" placeholder="Your name" autocomplete="name">
+<label for="e">📧 Email</label><input id="e" type="email" placeholder="you@example.com" autocomplete="email">
+<label for="p">🔒 Password (min 6)</label>${pw('p','Create a password','new-password')}
+<div class="meter"><i id="mt"></i></div><small id="ml">Use 10+ characters with a number and a capital letter.</small>
+<label for="p2">✅ Confirm password</label>${pw('p2','Repeat password','new-password')}
+<button class="btn wide" id="rb" style="margin-top:18px">Create account 🍵</button><div class="msg" id="m"></div>
+<p class="alt-link">Already registered? <a href="#/login">Log in</a></p>`);
+const _al=after.login,_ar=after.register;
+const enter=b=>document.querySelectorAll('.ainner input').forEach(i=>i.onkeydown=e=>{if(e.key==='Enter')$(b).click()});
+after.login=()=>{_al();$('#lb').addEventListener('click',()=>{$('#rm').checked?localStorage.ht_rem=$('#e').value.trim().toLowerCase():localStorage.removeItem('ht_rem')});enter('#lb')};
+after.register=()=>{_ar();enter('#rb');$('#p').oninput=e=>{const v=e.target.value,s=(v.length>=6)+(v.length>=10)+/[A-Z]/.test(v)+/\d/.test(v)+/[^\w\s]/.test(v);
+ $('#mt').style.width=s*20+'%';$('#mt').style.background=['#ccc','#e53935','#f4511e','#f9a825','#7cb342','#2e7d32'][s];$('#ml').textContent=v?['Too weak','Weak','Okay','Good','Strong','Very strong 💪'][s]:'Use 10+ characters with a number and a capital letter.'}};
+
 /* ---------- Router ---------- */
 function route(){
  const me=store.me(),open=['login','register'];
