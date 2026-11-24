@@ -1,3 +1,6 @@
+/* ---------- Safety: storage fallback + link fix for iframes (Streamlit) ---------- */
+(function(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t')}catch(e){const m={};Object.defineProperty(window,'localStorage',{value:new Proxy({getItem:k=>k in m?m[k]:null,setItem:(k,v)=>{m[k]=String(v)},removeItem:k=>{delete m[k]}},{get:(t,k)=>k in t?t[k]:m[k],set:(t,k,v)=>{m[k]=String(v);return true},deleteProperty:(t,k)=>{delete m[k];return true}})})}})();
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#/"]');if(!a)return;e.preventDefault();const h=a.getAttribute('href');if(location.hash===h)window.dispatchEvent(new HashChangeEvent('hashchange'));else location.hash=h});
 /* ---------- SVG helpers ---------- */
 const $=s=>document.querySelector(s);
 const flower=(c='#d6203f',d='#7a0f2e',cls='')=>{

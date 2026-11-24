@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hibiscus Tea – A Natural Sip of Freshness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,800;1,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#7a0f2e;--red:#d6203f;--rose:#f7b6c2;--blush:#fff0f3;--pink:#fbd5dc;--leaf:#3f6b3a;--ink:#3a0a18;--card:#fff;--bg:#fff5f7;--r:22px}
+body.dark{--bg:#2a0612;--card:#3d0c1d;--ink:#ffe4ea;--blush:#47101f;--pink:#5a1427}
+*{box-sizing:border-box;margin:0}
+body{font-family:Nunito,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;color:var(--wine);line-height:1.15}
+body.dark h1,body.dark h2,body.dark h3{color:#ffb3c3}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+header{position:sticky;top:0;z-index:50;background:var(--wine);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 5%;flex-wrap:wrap}
+.logo{font-family:Fraunces,serif;font-weight:800;font-size:1.3rem;display:flex;align-items:center;gap:8px}
+.logo svg{width:34px;height:34px}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+nav a{padding:6px 12px;border-radius:20px;font-weight:600;font-size:.92rem}
+nav a:hover,nav a.on{background:var(--rose);color:var(--wine)}
+.avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;background:var(--rose);display:inline-grid;place-items:center;color:var(--wine);font-weight:800}
+.btn{background:var(--red);color:#fff;border:0;padding:11px 24px;border-radius:30px;font-weight:700;transition:transform .2s,background .2s;display:inline-block}
+.btn:hover{background:var(--wine);transform:translateY(-2px)}
+.btn.alt{background:transparent;border:2px solid var(--wine);color:var(--wine)}
+body.dark .btn.alt{color:#ffb3c3;border-color:#ffb3c3}
+main{min-height:70vh}
+section.pg{padding:50px 5%;max-width:1200px;margin:auto}
+.hero{background:linear-gradient(135deg,var(--pink),var(--blush));display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:20px;padding:50px 5%;position:relative;overflow:hidden;min-height:560px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);margin-bottom:14px}
+.hero p{max-width:480px;margin-bottom:22px}
+.hero .art{position:relative;height:420px}
+.hero .art .cup{position:absolute;left:50%;top:50%;width:330px;transform:translate(-50%,-45%)}
+.hero .art .fl{position:absolute}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.hero .art{height:320px}}
+.petal{position:absolute;top:-40px;width:22px;opacity:.8;pointer-events:none;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(700px) rotate(540deg)}}
+.sway{animation:sway 5s ease-in-out infinite;transform-origin:50% 100%}
+.spin{animation:spin 24s linear infinite}
+.bob{animation:bob 4s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(9deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{50%{transform:translateY(-14px)}}
+.steam path{stroke:#fff;stroke-width:4;fill:none;stroke-linecap:round;opacity:0;animation:steam 3s ease-in-out infinite}
+.steam path:nth-child(2){animation-delay:1s}.steam path:nth-child(3){animation-delay:2s}
+@keyframes steam{0%{opacity:0;transform:translateY(10px)}40%{opacity:.8}100%{opacity:0;transform:translateY(-30px)}}
+.bub circle{fill:#fff;opacity:.6;animation:rise 3s linear infinite}
+.bub circle:nth-child(2){animation-delay:1s}.bub circle:nth-child(3){animation-delay:2s}
+@keyframes rise{from{transform:translateY(0)}to{transform:translateY(-90px);opacity:0}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px;margin-top:26px}
+.card{background:var(--card);border-radius:var(--r);padding:20px;box-shadow:0 8px 24px rgba(122,15,46,.12);text-align:center;transition:transform .3s}
+.card:hover{transform:translateY(-6px) rotate(-.6deg)}
+.card svg.item{width:150px;height:150px}
+.card h3{font-size:1.25rem;margin:8px 0 4px}
+.card .price{font-weight:800;color:var(--red);margin:6px 0 10px}
+.tag{display:inline-block;background:var(--rose);color:var(--wine);border-radius:12px;padding:2px 10px;font-size:.78rem;font-weight:700;margin:2px}
+.bar{background:var(--wine);color:#fff;text-align:center;padding:30px 5%;display:flex;gap:30px;justify-content:space-around;flex-wrap:wrap}
+.bar b{font-family:Fraunces,serif;font-size:1.3rem;display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+@media(max-width:800px){.two{grid-template-columns:1fr}}
+.form{max-width:430px;margin:40px auto;background:var(--card);padding:32px;border-radius:var(--r);box-shadow:0 12px 36px rgba(122,15,46,.18);position:relative;overflow:hidden}
+.form label{display:block;font-weight:700;margin:14px 0 4px}
+input,select,textarea{width:100%;padding:11px 14px;border:2px solid var(--rose);border-radius:14px;font:inherit;background:var(--blush);color:var(--ink)}
+input:focus,select:focus{border-color:var(--red);outline:0}
+.msg{margin-top:12px;font-weight:700;color:var(--red)}
+.ok{color:var(--leaf)}
+.timer{display:grid;place-items:center;gap:14px;text-align:center}
+.ring{position:relative;width:260px;height:260px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .t{position:absolute;inset:0;display:grid;place-items:center;font-family:Fraunces,serif;font-size:3rem;color:var(--wine)}
+body.dark .ring .t{color:#ffb3c3}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;background:var(--card);margin:10px 0;padding:14px 16px 14px 60px;border-radius:16px;position:relative}
+.steps li:before{content:counter(s);position:absolute;left:14px;top:50%;transform:translateY(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chip{border:2px solid var(--wine);background:none;color:var(--wine);padding:6px 14px;border-radius:20px;font-weight:700}
+body.dark .chip{color:#ffb3c3;border-color:#ffb3c3}
+.chip.on{background:var(--wine);color:#fff}
+.sw{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--wine);margin:3px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,120px);background:var(--wine);color:#fff;padding:12px 24px;border-radius:30px;transition:.4s;z-index:99}
+#toast.show{transform:translate(-50%,0)}
+footer{background:var(--wine);color:#fde;text-align:center;padding:30px 5%;margin-top:50px}
+.big-av{width:120px;height:120px;border-radius:50%;object-fit:cover;background:var(--rose);display:grid;place-items:center;font-size:3rem;color:var(--wine);margin:auto;border:4px solid var(--red)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--rose)}
+body.noanim *{animation:none!important}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* ---- extra ---- */
+.strip{background:var(--red);color:#fff;text-align:center;padding:8px 5%;font-weight:600}
+.more{position:relative}
+.more summary{list-style:none;padding:6px 12px;border-radius:20px;font-weight:600;font-size:.92rem;cursor:pointer}
+.more summary::-webkit-details-marker{display:none}
+.more summary:hover,.more[open] summary{background:var(--rose);color:var(--wine)}
+.more div{position:absolute;right:0;top:110%;background:var(--wine);border-radius:16px;padding:8px;display:grid;min-width:170px;box-shadow:0 12px 30px rgba(0,0,0,.3);z-index:60}
+.heart{position:absolute;right:14px;top:12px;background:none;border:0;font-size:1.5rem;color:#d9b3bb;transition:transform .2s}
+.heart:hover{transform:scale(1.25)}.heart.on{color:var(--red)}
+.bar.light{background:var(--pink);color:var(--wine)}
+body.dark .bar.light{color:#ffb3c3}
+.quizcta{display:flex;align-items:center;gap:24px;justify-content:center;flex-wrap:wrap}
+.cl{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding:14px 18px;text-align:left}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button,.x{width:30px;height:30px;border-radius:50%;border:2px solid var(--wine);background:none;color:var(--wine);font-weight:800}
+body.dark .qty button,body.dark .x{color:#ffb3c3;border-color:#ffb3c3}
+.x{border-color:transparent}
+.acc{background:var(--card);border-radius:16px;padding:14px 18px;margin:12px 0;box-shadow:0 4px 14px rgba(122,15,46,.1)}
+.acc summary{font-weight:700;cursor:pointer;font-family:Fraunces,serif;color:var(--wine)}
+body.dark .acc summary{color:#ffb3c3}
+.acc ul,.acc ol{margin:6px 0 10px 20px}
+.coupon{border:3px dashed var(--red)}
+.coupon h3{letter-spacing:2px}
+.prog{background:var(--pink);border-radius:20px;height:12px;overflow:hidden;margin:10px 0}
+.prog i{display:block;height:100%;background:var(--red);border-radius:20px}
+.stars{color:#f0a500;letter-spacing:2px;font-size:1.1rem}
+.note{margin-top:24px;text-align:left;border-left:6px solid var(--red)}
+textarea{resize:vertical}
+nav{align-items:center}
+
+/* ---- rich auth ---- */
+.auth{display:grid;grid-template-columns:1.1fr 1fr;min-height:calc(100vh - 56px)}
+.aart{position:relative;overflow:hidden;background:radial-gradient(circle at 30% 20%,#b01030,#7a0f2e 55%,#4a0719);color:#fff;min-height:620px}
+.aart>*{position:absolute}
+.aart .petal{z-index:1}
+.emo{z-index:1;animation:floaty 6s ease-in-out infinite;opacity:.85}
+@keyframes floaty{50%{transform:translateY(-18px) rotate(10deg)}}
+.abrand{position:relative!important;z-index:4;padding:36px 8%}
+.alogo{width:64px}
+.abrand h1{color:#fff;font-size:clamp(2.3rem,4.5vw,3.6rem);margin:8px 0 4px}
+.achips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.achips span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);padding:5px 14px;border-radius:20px;font-weight:700;font-size:.88rem}
+.a-cup{left:50%;bottom:4%;width:300px;margin-left:-150px;z-index:3}
+.a-gl1{left:5%;bottom:7%;width:115px;z-index:3}
+.a-gl2{right:5%;bottom:9%;width:105px;z-index:3}
+.a-fl1{left:-40px;top:42%;width:150px;z-index:2}
+.a-fl2{right:-25px;top:26%;width:110px;z-index:2}
+.a-fl3{left:12%;bottom:44%;width:56px;z-index:2}
+.a-lf{right:22%;bottom:2%;width:50px;z-index:2}
+.aform{background:linear-gradient(160deg,#fff0f3,#fff);display:flex;align-items:center;padding:40px 6%;color:#3a0a18}
+.ainner{width:100%;max-width:440px;margin:auto}
+.aform h2{font-size:2rem;color:var(--wine)}
+.sub{margin:6px 0 4px}
+.atabs{display:flex;background:var(--pink);border-radius:30px;padding:5px;margin-bottom:22px}
+.atabs a{flex:1;text-align:center;padding:9px;border-radius:25px;font-weight:700;color:var(--wine)}
+.atabs a.on{background:var(--wine);color:#fff;box-shadow:0 4px 12px rgba(122,15,46,.3)}
+.aform label{display:block;font-weight:700;margin:14px 0 4px}
+.pw{position:relative}
+.pw input{padding-right:46px}
+.eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;font-size:1.2rem}
+.btn.wide{width:100%;margin-top:6px;font-size:1.05rem;padding:13px}
+.meter{height:8px;background:var(--pink);border-radius:8px;margin-top:8px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;border-radius:8px;transition:.3s}
+.alt-link{text-align:center;margin-top:16px}
+.alt-link a{color:var(--red);font-weight:800}
+@media(max-width:800px){.auth{grid-template-columns:1fr}.aart{min-height:560px}.a-cup{width:240px;margin-left:-120px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#/home"><span id="lg"></span>Hibiscus Tea</a>
+  <nav id="nav"></nav>
+</header>
+<main id="app"></main>
+<footer>
+  <b>Hibiscus Tea – A Natural Sip of Freshness</b><br>
+  <a href="#/offers">Offers</a> • <a href="#/recipes">Recipes</a> • <a href="#/faq">FAQ</a> • <a href="#/contact">Contact</a><br>
+  Natural • Caffeine-free • Eco-friendly packaging • Made in Pakistan<br>
+  <small>© 2026 Hibiscus Tea. Student business project, Namal University.</small>
+</footer>
+<div id="toast"></div>
+
+<script>
+/* ---------- Safety: storage fallback + link fix for iframes (Streamlit) ---------- */
+(function(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t')}catch(e){const m={};Object.defineProperty(window,'localStorage',{value:new Proxy({getItem:k=>k in m?m[k]:null,setItem:(k,v)=>{m[k]=String(v)},removeItem:k=>{delete m[k]}},{get:(t,k)=>k in t?t[k]:m[k],set:(t,k,v)=>{m[k]=String(v);return true},deleteProperty:(t,k)=>{delete m[k];return true}})})}})();
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#/"]');if(!a)return;e.preventDefault();const h=a.getAttribute('href');if(location.hash===h)window.dispatchEvent(new HashChangeEvent('hashchange'));else location.hash=h});
+/* ---------- SVG helpers ---------- */
+const $=s=>document.querySelector(s);
+const flower=(c='#d6203f',d='#7a0f2e',cls='')=>{
+  let p='';for(let i=0;i<5;i++)p+=`<path d="M50 50C18 42 14 8 50 6C86 8 82 42 50 50Z" fill="${c}" stroke="${d}" stroke-width="1.2" transform="rotate(${i*72} 50 50)"/><path d="M50 48L50 14" stroke="${d}" stroke-width=".8" opacity=".4" transform="rotate(${i*72} 50 50)"/>`;
+  return `<svg class="${cls}" viewBox="0 0 100 100">${p}<circle cx="50" cy="50" r="9" fill="${d}"/><path d="M50 50L66 24" stroke="#f7c948" stroke-width="2.5"/><circle cx="66" cy="23" r="3.5" fill="#f7c948"/><circle cx="62" cy="28" r="2" fill="#fff3b0"/></svg>`};
+const leaf=(cls='')=>`<svg class="${cls}" viewBox="0 0 60 100"><path d="M30 98C0 70 0 25 30 2C60 25 60 70 30 98Z" fill="#3f6b3a"/><path d="M30 95V10" stroke="#9ccc8a" stroke-width="2"/></svg>`;
+const cup=(tea='#b01030',cls='',flowerOn=true)=>`<svg class="${cls}" viewBox="0 0 300 260">
+<ellipse cx="150" cy="232" rx="125" ry="20" fill="#7a0f2e" opacity=".25"/>
+<ellipse cx="150" cy="220" rx="115" ry="22" fill="#f7b6c2" stroke="#7a0f2e" stroke-width="3"/>
+<ellipse cx="150" cy="216" rx="80" ry="13" fill="#fff0f3"/>
+<path d="M232 105C290 100 290 170 228 172" fill="none" stroke="#7a0f2e" stroke-width="12" stroke-linecap="round"/>
+<path d="M62 100H238C238 175 215 212 150 212C85 212 62 175 62 100Z" fill="#fff" stroke="#7a0f2e" stroke-width="4"/>
+<path d="M75 135H225" stroke="#f7b6c2" stroke-width="5" stroke-dasharray="3 10" stroke-linecap="round"/>
+<ellipse cx="150" cy="100" rx="88" ry="20" fill="#fff" stroke="#7a0f2e" stroke-width="4"/>
+<ellipse cx="150" cy="102" rx="78" ry="15" fill="${tea}"/>
+<ellipse cx="125" cy="98" rx="30" ry="4" fill="#fff" opacity=".35"/>
+${flowerOn?`<g class="bob" style="transform-origin:150px 100px"><g transform="translate(170 78) scale(.42)">${flower().replace(/<\/?svg[^>]*>/g,'')}</g></g>`:''}
+<g class="steam" transform="translate(0 20)"><path d="M115 70C100 50 130 40 115 18"/><path d="M150 70C135 50 165 40 150 18"/><path d="M185 70C170 50 200 40 185 18"/></g></svg>`;
+const glass=(liq='#d6203f',top='#f7b6c2',garn='lemon',cls='')=>`<svg class="${cls}" viewBox="0 0 200 260">
+<path d="M150 10L135 150" stroke="#7a0f2e" stroke-width="7" stroke-linecap="round"/>
+<path d="M45 40H155L140 235C139 245 132 250 124 250H76C68 250 61 245 60 235Z" fill="${liq}" opacity=".92"/>
+<path d="M50 40H150L146 82H54Z" fill="${top}" opacity=".7"/>
+<rect x="72" y="100" width="34" height="34" rx="6" fill="#fff" opacity=".45" transform="rotate(12 89 117)"/>
+<rect x="96" y="150" width="32" height="32" rx="6" fill="#fff" opacity=".4" transform="rotate(-10 112 166)"/>
+<rect x="68" y="178" width="30" height="30" rx="6" fill="#fff" opacity=".35" transform="rotate(8 83 193)"/>
+<g class="bub"><circle cx="90" cy="220" r="4"/><circle cx="112" cy="225" r="3"/><circle cx="100" cy="215" r="5"/></g>
+<path d="M45 40H155L140 235C139 245 132 250 124 250H76C68 250 61 245 60 235Z" fill="none" stroke="#7a0f2e" stroke-width="4"/>
+<path d="M56 50L68 220" stroke="#fff" stroke-width="5" opacity=".5" stroke-linecap="round"/>
+${garn==='lemon'?'<g transform="translate(150 40)"><circle r="20" fill="#ffe36e" stroke="#e0b400" stroke-width="3"/><path d="M0 -17V17M-17 0H17M-12 -12L12 12M12 -12L-12 12" stroke="#fff6bf" stroke-width="2"/></g>':garn==='mint'?'<g transform="translate(70 38)"><ellipse rx="14" ry="26" fill="#3f6b3a" transform="rotate(-25) translate(-8 -14)"/><ellipse rx="14" ry="26" fill="#5a8f4f" transform="rotate(25) translate(8 -14)"/></g>':'<g transform="translate(150 38) scale(.38)">'+flower().replace(/<\/?svg[^>]*>/g,'')+'</g>'}
+</svg>`;
+const tin=(c='#7a0f2e',txt='Hibiscus',shape='tin')=>`<svg viewBox="0 0 200 240">${shape==='box'?`<rect x="30" y="40" width="140" height="170" rx="10" fill="${c}"/><rect x="30" y="40" width="140" height="22" fill="#000" opacity=".15"/>`:shape==='pouch'?`<path d="M40 30H160L170 220H30Z" fill="${c}"/><path d="M40 40H160" stroke="#fff" stroke-dasharray="4 4" opacity=".6"/>`:`<rect x="45" y="25" width="110" height="26" rx="8" fill="#f7b6c2"/><rect x="40" y="48" width="120" height="165" rx="14" fill="${c}"/>`}
+<g transform="translate(66 80) scale(.7)">${flower('#fff0f3','#f7b6c2').replace(/<\/?svg[^>]*>/g,'')}</g>
+<text x="100" y="175" text-anchor="middle" font-family="Fraunces,serif" font-size="17" font-weight="800" fill="#fff">${txt.replace(/[<>&]/g,'')}</text>
+<text x="100" y="195" text-anchor="middle" font-size="9" fill="#fbd5dc">NATURAL • CAFFEINE-FREE</text></svg>`;
+
+/* ---------- Data ---------- */
+const TEAS=[
+{n:'Classic Hibiscus',c:'#b01030',t:5,p:650,d:'Pure tangy hibiscus. Rich in antioxidants.',tg:['Pure','Tart']},
+{n:'Lemon Hibiscus',c:'#d9461f',t:4,p:700,d:'Fresh lemon zest for a bright, zingy cup.',tg:['Citrus','Fresh']},
+{n:'Mint Hibiscus',c:'#9c1038',t:4,p:700,d:'Cooling pudina with hibiscus. Great after meals.',tg:['Cooling','Digestive']},
+{n:'Honey Hibiscus',c:'#c1412b',t:5,p:800,d:'Soft natural sweetness, perfect for winter evenings.',tg:['Sweet','Cozy']},
+{n:'Rose Hibiscus',c:'#c2185b',t:6,p:850,d:'Gulab petals meet hibiscus. Floral and calming.',tg:['Floral','Calm']},
+{n:'Ginger Hibiscus',c:'#a8281c',t:7,p:750,d:'Adrak warmth for cold days and sore throats.',tg:['Warm','Spicy']}];
+const COLD=[
+{n:'Hibiscus Iced Cooler',l:'#d6203f',g:'lemon',p:350,d:'Chilled hibiscus, lemon, plenty of ice.'},
+{n:'Pudina Mojito',l:'#9c1038',g:'mint',p:380,d:'Mint, lime and hibiscus. Summer in a glass.'},
+{n:'Berry Blush Sparkle',l:'#c2185b',g:'flower',p:420,d:'Hibiscus, berries and soda. Fizzy and pink.'},
+{n:'Gulab Hibiscus Sharbat',l:'#e0587a',g:'flower',p:360,d:'A modern twist on our classic sharbat.'}];
+const PACKS=[
+{n:'Starter Sip Box',c:'#7a0f2e',sh:'box',p:1800,d:'3 flavours, 10 tea bags each.'},
+{n:'Family Chai Time',c:'#d6203f',sh:'tin',p:3200,d:'6 flavours, a ceramic cup set and honey.'},
+{n:'Eid / Shaadi Hamper',c:'#a8123c',sh:'pouch',p:5500,d:'Premium tins, 2 cups, a glass bottle and a card.'}];
+
+/* ---------- Store ---------- */
+const store={
+ users:()=>JSON.parse(localStorage.ht_users||'[]'),
+ save:u=>localStorage.ht_users=JSON.stringify(u),
+ me:()=>store.users().find(u=>u.email===localStorage.ht_me),
+ upd(fn){const us=store.users(),m=us.find(u=>u.email===localStorage.ht_me);if(m){fn(m);store.save(us)}}
+};
+function toast(m){const t=$('#toast');t.textContent=m;t.className='show';setTimeout(()=>t.className='',2200)}
+function applyPrefs(){const m=store.me();document.body.classList.toggle('dark',!!(m&&m.dark));document.body.classList.toggle('noanim',!!(m&&m.noanim))}
+
+/* ---------- Nav ---------- */
+const LINKS=[['home','Home'],['teas','Teas'],['cold','Cold Drinks'],['howto','How to Brew'],['gifts','Gift Packs'],['custom','Customize'],['offers','Offers']];
+const MORE=[['benefits','Benefits'],['recipes','Recipes'],['quiz','Flavour Quiz'],['reviews','Reviews'],['faq','FAQ'],['contact','Contact'],['about','About']];
+function renderNav(){
+ const m=store.me(),h=(location.hash||'#/home').slice(2);
+ $('#lg').innerHTML=flower('#f7b6c2','#fff','');
+ $('#nav').innerHTML=(m?LINKS:[]).map(lk).join('')+(m?`<details class="more"><summary>More</summary><div>${MORE.map(lk).join('')}</div></details>`:'')+
+ (m?`<a href="#/cart" class="${h==='cart'?'on':''}">Cart (${cartCount()})</a>`:'')+
+ (m?`<a href="#/profile" aria-label="Profile">${m.pic?`<img class="avatar" src="${m.pic}" alt="">`:`<span class="avatar">${m.name[0].toUpperCase()}</span>`}</a>`
+   :`<a href="#/login">Login</a><a href="#/register" class="on">Register</a>`)}
+
+/* ---------- Pages ---------- */
+const pages={
+home(){
+ let petals='';for(let i=0;i<10;i++)petals+=`<div class="petal" style="left:${Math.random()*100}%;animation-duration:${8+Math.random()*8}s;animation-delay:-${Math.random()*10}s">${flower('#d6203f','#7a0f2e')}</div>`;
+ return `<div class="hero">${petals}
+ <div><h1>A natural sip of freshness.</h1><p>Caffeine-free hibiscus tea, hot or iced, grown by local farmers and packed in eco-friendly boxes. Rich in antioxidants, light on your pocket.</p>
+ <a class="btn" href="#/teas">Shop teas</a> <a class="btn alt" href="#/cold">Cold drinks</a></div>
+ <div class="art">${cup('#b01030','cup')}<div class="fl sway" style="width:120px;left:2%;top:4%">${flower()}</div><div class="fl spin" style="width:90px;right:4%;top:10%">${flower('#e0587a','#7a0f2e')}</div><div class="fl bob" style="width:60px;left:12%;bottom:6%">${leaf()}</div><div class="fl sway" style="width:100px;right:2%;bottom:2%">${flower('#f06a86','#7a0f2e')}</div></div></div>
+ <div class="bar"><div><b>Delivery across Pakistan</b>Free above Rs 3,000</div><div><b>Fresh weekly batches</b>Never stale, always fragrant</div><div><b>10% off your first order</b>Code WELCOME10</div><div><b>Local flowers</b>Supporting our farmers</div></div>
+ <section class="pg"><h2>Our favourite flavours</h2><div class="grid">${TEAS.slice(0,3).map(teaCard).join('')}</div>
+ <h2 style="margin-top:50px">Cool down with a glass</h2><div class="grid">${COLD.slice(0,2).map(coldCard).join('')}</div></section>`},
+teas(){return `<section class="pg"><h2>Tea flavours</h2><p>Every cup is a different colour. Pick one and add it to your cart.</p><div class="grid">${TEAS.map(teaCard).join('')}</div></section>`},
+cold(){return `<section class="pg"><h2>Cold drinks</h2><p>Brew strong, pour over ice, and enjoy.</p><div class="grid">${COLD.map(coldCard).join('')}</div>
+ <div class="card" style="margin-top:30px;text-align:left"><h3>Quick iced hibiscus recipe</h3><ol class="steps"><li>Steep 2 tea bags in 250 ml hot water for 5 minutes.</li><li>Remove the bags and add honey or sugar while warm.</li><li>Cool for 10 minutes, then pour over a glass full of ice.</li><li>Top with lemon, mint, or a splash of soda.</li></ol></div></section>`},
+howto(){return `<section class="pg"><h2>How to brew the perfect cup</h2><div class="two"><div class="timer"><div class="chips" id="tchips">${TEAS.map((t,i)=>`<button class="chip ${i?'':'on'}" data-i="${i}">${t.n.split(' ')[0]}</button>`).join('')}</div>
+ <div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="#fbd5dc" stroke-width="7"/><circle id="arc" cx="50" cy="50" r="45" fill="none" stroke="#d6203f" stroke-width="7" stroke-linecap="round" stroke-dasharray="282.7" stroke-dashoffset="0"/></svg><div class="t" id="tt">05:00</div></div>
+ <div id="tcup" style="width:200px"></div>
+ <div><button class="btn" id="go">Start</button> <button class="btn alt" id="rs">Reset</button></div><div id="tmsg" class="msg ok"></div></div>
+ <div><ol class="steps"><li>Boil fresh water, then wait 30 seconds.</li><li>Place one tea bag in your cup (or 1 tsp loose tea).</li><li>Pour 200 ml hot water and start the timer.</li><li>Watch the colour deepen. Remove the bag when the timer rings.</li><li>Add honey or lemon, sip slowly, and relax.</li></ol></div></div></section>`},
+gifts(){return `<section class="pg"><h2>Gift packs</h2><p>Beautiful boxes for Eid, birthdays and weddings. Personalise any pack in <a href="#/custom" style="color:var(--red);font-weight:700">Customize</a>.</p><div class="grid">${PACKS.map(k=>`<div class="card">${tin(k.c,k.n.split(' ')[0],k.sh).replace('<svg','<svg class="item"')}<h3>${k.n}</h3><p>${k.d}</p><div class="price">Rs ${k.p}</div><button class="btn" onclick="add('${k.n}')">Add to cart</button></div>`).join('')}</div></section>`},
+custom(){return `<section class="pg"><h2>Design your own pack</h2><div class="two"><div class="card" id="prev" style="min-height:380px;display:grid;place-items:center"></div>
+ <div class="card" style="text-align:left"><label><b>Name on the pack</b></label><input id="cn" maxlength="14" value="${(store.me()||{name:'Hibiscus'}).name.split(' ')[0]}">
+ <p style="margin-top:14px"><b>Shape</b></p><div class="chips" id="csh"><button class="chip on" data-v="tin">Tin</button><button class="chip" data-v="box">Box</button><button class="chip" data-v="pouch">Pouch</button></div>
+ <p><b>Colour</b></p><div id="ccl">${['#7a0f2e','#d6203f','#c2185b','#3f6b3a','#4a1942','#e0587a'].map(c=>`<button class="sw" data-v="${c}" style="background:${c}" aria-label="${c}"></button>`).join('')}</div>
+ <p style="margin-top:12px"><b>Flavour inside</b></p><select id="cf">${TEAS.map(t=>`<option>${t.n}</option>`).join('')}</select>
+ <p style="margin-top:16px"><button class="btn" id="cadd">Add to cart – Rs 1,200</button> <button class="btn alt" id="csv">Save design</button></p></div></div></section>`},
+about(){return `<section class="pg"><div class="two"><div><h2>Why hibiscus?</h2><p style="margin:14px 0">Hibiscus tea is naturally tangy, caffeine-free and rich in antioxidants. We wanted a healthy drink that students, families and tea lovers in Pakistan can afford every day.</p><p>We source flowers from local farmers, pack in eco-friendly materials, and follow PFA and FBR regulations. Our promise: grow naturally.</p></div>
+ <div style="display:grid;place-items:center">${cup('#b01030','',true).replace('<svg','<svg style="width:320px"')}</div></div>
+ <h2 style="margin-top:40px">Who we serve</h2><div class="grid">${['Health-conscious people (18–35)','Students and young professionals','Families who want natural drinks','Tea lovers who want new flavours','Eco-aware customers'].map(s=>`<div class="card"><div style="width:60px;margin:auto">${flower('#e0587a')}</div><h3 style="font-size:1.05rem">${s}</h3></div>`).join('')}</div></section>`},
+login(){return `<section class="pg"><div class="form"><div style="position:absolute;right:-30px;top:-30px;width:110px;opacity:.9" class="spin">${flower()}</div><h2>Welcome back</h2>
+ <label for="e">Email</label><input id="e" type="email" autocomplete="email"><label for="p">Password</label><input id="p" type="password" autocomplete="current-password">
+ <p style="margin-top:20px"><button class="btn" id="lb">Log in</button></p><div class="msg" id="m"></div><p style="margin-top:14px">New here? <a href="#/register" style="color:var(--red);font-weight:700">Create an account</a></p></div></section>`},
+register(){return `<section class="pg"><div class="form"><div style="position:absolute;left:-30px;top:-30px;width:110px" class="spin">${flower('#e0587a')}</div><h2 style="text-align:right">Join Hibiscus Tea</h2>
+ <label for="n">Full name</label><input id="n"><label for="e">Email</label><input id="e" type="email"><label for="p">Password (min 6)</label><input id="p" type="password" autocomplete="new-password"><label for="p2">Confirm password</label><input id="p2" type="password">
+ <p style="margin-top:20px"><button class="btn" id="rb">Create account</button></p><div class="msg" id="m"></div><p style="margin-top:14px">Already registered? <a href="#/login" style="color:var(--red);font-weight:700">Log in</a></p></div></section>`},
+profile(){const m=store.me();if(!m){location.hash='#/login';return ''}
+ return `<section class="pg"><div class="form" style="max-width:520px"><div id="bav">${m.pic?`<img class="big-av" src="${m.pic}" alt="Profile picture">`:`<div class="big-av">${m.name[0].toUpperCase()}</div>`}</div>
+ <p style="text-align:center;margin:10px 0"><label class="btn alt" style="cursor:pointer;margin:0">Upload picture<input type="file" id="pf" accept="image/*" hidden></label></p>
+ <h2 style="text-align:center">Settings</h2>
+ <label for="n">Full name</label><input id="n" value="${m.name}"><label>Email</label><input value="${m.email}" disabled>
+ <div class="row"><span>Dark mode</span><input type="checkbox" id="dk" style="width:22px" ${m.dark?'checked':''}></div>
+ <div class="row"><span>Turn off animations</span><input type="checkbox" id="na" style="width:22px" ${m.noanim?'checked':''}></div>
+ <p style="margin-top:18px"><button class="btn" id="sv">Save changes</button> <button class="btn alt" id="lo">Log out</button></p><div class="msg ok" id="m"></div>
+ ${accountHTML(m)}${m.design?`<h3 style="margin-top:20px">Your saved design</h3><div style="width:150px;margin:auto">${tin(m.design.c,m.design.n,m.design.s)}</div>`:''}</div></section>`}
+};
+function teaCard(t){return `<div class="card" style="position:relative"><button class="heart ${wl().includes(t.n)?'on':''}" aria-label="Add to wishlist" onclick="wish('${t.n}',this)">♥</button>${cup(t.c,'item',false)}<h3>${t.n}</h3><div>${t.tg.map(x=>`<span class="tag">${x}</span>`).join('')}<span class="tag">${t.t} min</span></div><p>${t.d}</p><div class="price">Rs ${t.p}</div><button class="btn" onclick="add('${t.n}')">Add to cart</button></div>`}
+function coldCard(c){return `<div class="card">${glass(c.l,'#f7b6c2',c.g,'item')}<h3>${c.n}</h3><p>${c.d}</p><div class="price">Rs ${c.p}</div><button class="btn" onclick="add('${c.n}')">Add to cart</button></div>`}
+
+/* ---------- Page behaviours ---------- */
+const after={
+howto(){
+ let i=0,left=TEAS[0].t*60,tot=left,iv=null;
+ const tt=$('#tt'),arc=$('#arc'),msg=$('#tmsg');
+ const draw=()=>{tt.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');arc.style.strokeDashoffset=282.7*(1-left/tot);
+  const k=1-left/tot;$('#tcup').innerHTML=cup(`hsl(${350-0},${40+60*k}%,${70-35*k}%)`,'',false)};
+ const set=n=>{clearInterval(iv);iv=null;i=n;tot=left=TEAS[n].t*60;$('#go').textContent='Start';msg.textContent='Steep time for '+TEAS[n].n+': '+TEAS[n].t+' min';draw()};
+ const beep=()=>{try{const a=new AudioContext(),o=a.createOscillator();o.connect(a.destination);o.frequency.value=880;o.start();setTimeout(()=>o.stop(),600)}catch(e){}};
+ $('#tchips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('#tchips .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');set(+b.dataset.i)};
+ $('#go').onclick=e=>{if(iv){clearInterval(iv);iv=null;e.target.textContent='Resume';return}
+  e.target.textContent='Pause';iv=setInterval(()=>{left--;draw();if(left<=0){clearInterval(iv);iv=null;$('#go').textContent='Start';msg.textContent='Your tea is ready! Remove the tea bag.';beep();left=tot}},1000)};
+ $('#rs').onclick=()=>set(i);set(0)},
+custom(){
+ const st={c:'#7a0f2e',s:'tin'},draw=()=>$('#prev').innerHTML=`<div style="width:260px" class="bob">${tin(st.c,$('#cn').value||'Hibiscus',st.s)}</div>`;
+ $('#cn').oninput=draw;
+ $('#csh').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('#csh .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');st.s=b.dataset.v;draw()};
+ $('#ccl').onclick=e=>{if(e.target.dataset.v){st.c=e.target.dataset.v;draw()}};
+ $('#cadd').onclick=()=>add('Custom pack');
+ $('#csv').onclick=()=>{if(!store.me()){toast('Please log in to save your design');return}store.upd(m=>m.design={c:st.c,s:st.s,n:$('#cn').value||'Hibiscus'});toast('Design saved to your profile')};
+ draw()},
+login(){$('#lb').onclick=()=>{const u=store.users().find(x=>x.email===$('#e').value.trim().toLowerCase()&&x.pw===btoa($('#p').value));
+  if(!u){$('#m').textContent='Email or password is wrong. Check both and try again.';return}
+  localStorage.ht_me=u.email;location.hash='#/home'}},
+register(){$('#rb').onclick=()=>{const n=$('#n').value.trim(),e=$('#e').value.trim().toLowerCase(),p=$('#p').value,m=$('#m');
+  if(!n||!/^\S+@\S+\.\S+$/.test(e))return m.textContent='Enter your name and a valid email.';
+  if(p.length<6)return m.textContent='Password must be at least 6 characters.';
+  if(p!==$('#p2').value)return m.textContent='Passwords do not match.';
+  const us=store.users();if(us.some(x=>x.email===e))return m.textContent='This email is already registered. Log in instead.';
+  us.push({name:n,email:e,pw:btoa(p)});store.save(us);localStorage.ht_me=e;toast('Account created. Welcome, '+n.split(' ')[0]+'!');location.hash='#/home'}},
+profile(){
+ $('#pf').onchange=e=>{const f=e.target.files[0];if(!f)return;if(f.size>1.5e6){$('#m').textContent='Image is too large. Pick one under 1.5 MB.';return}
+  const r=new FileReader();r.onload=()=>{store.upd(m=>m.pic=r.result);$('#bav').innerHTML=`<img class="big-av" src="${r.result}" alt="Profile picture">`;renderNav();$('#m').textContent='Picture updated.'};r.readAsDataURL(f)};
+ $('#sv').onclick=()=>{store.upd(m=>{m.name=$('#n').value.trim()||m.name;m.dark=$('#dk').checked;m.noanim=$('#na').checked});applyPrefs();renderNav();$('#m').textContent='Settings saved.'};
+ $('#lo').onclick=()=>{localStorage.removeItem('ht_me');applyPrefs();location.hash='#/register'}}
+};
+
+/* ================= EXTRA FEATURES ================= */
+const ALL=[...TEAS,...COLD,...PACKS,{n:'Custom pack',p:1200}];
+const getC=()=>JSON.parse(localStorage.ht_cart2||'[]');
+const setC=c=>{localStorage.ht_cart2=JSON.stringify(c);renderNav()};
+const cartCount=()=>getC().reduce((s,i)=>s+i.q,0);
+const rs=n=>'Rs '+Math.round(n).toLocaleString('en-US');
+function add(n){const it=ALL.find(x=>x.n===n);if(!it)return;const c=getC(),f=c.find(x=>x.n===n);f?f.q++:c.push({n,p:it.p,q:1});setC(c);toast(n+' added to cart ('+cartCount()+')')}
+const wl=()=>JSON.parse(localStorage.ht_wish||'[]');
+function wish(n,b){let w=wl();w=w.includes(n)?w.filter(x=>x!==n):[...w,n];localStorage.ht_wish=JSON.stringify(w);b.classList.toggle('on',w.includes(n));toast(w.includes(n)?'Saved to your wishlist':'Removed from your wishlist')}
+const lk=([k,l])=>`<a href="#/${k}" class="${(location.hash||'').slice(2)===k?'on':''}">${l}</a>`;
+const COUPONS={FRESH15:{pct:15,min:0,d:'15% off your whole order'},WELCOME10:{pct:10,min:0,d:'10% off for new members'},EID20:{pct:20,min:5000,d:'20% off orders above Rs 5,000'}};
+const FREE_SHIP=3000,SHIP=200;
+function calc(c,code){const sub=c.reduce((s,i)=>s+i.p*i.q,0),cp=COUPONS[code],disc=cp&&sub>=cp.min?sub*cp.pct/100:0,ship=sub-disc>=FREE_SHIP||!sub?0:SHIP;return{sub,disc,ship,total:sub-disc+ship}}
+const tier=p=>p>=1500?'Petal Pro':p>=500?'Bloom':'Bud';
+const star=n=>'★'.repeat(n)+'☆'.repeat(5-n);
+
+/* ---- Home: promo strip, extra sections ---- */
+const _home=pages.home;
+pages.home=()=>`<div class="strip">Use code <b>FRESH15</b> for 15% off. Free delivery on orders above Rs 3,000.</div>`+_home()+`
+<section class="pg"><h2>Why people switch to hibiscus</h2><div class="grid">${[['Antioxidant rich','Hibiscus is full of natural plant colour compounds called anthocyanins.'],['Caffeine-free','Drink it at 10 pm and still sleep well.'],['Hot or iced','One tea bag, two moods: warm chai-time cup or a chilled glass.'],['Naturally tangy','A tart, cranberry-like taste with no need for artificial flavour.']].map(([a,b])=>`<div class="card"><div style="width:60px;margin:auto" class="sway">${flower('#e0587a')}</div><h3>${a}</h3><p>${b}</p></div>`).join('')}</div>
+<p style="text-align:center;margin-top:20px"><a class="btn alt" href="#/benefits">Read all benefits</a></p></section>
+<div class="bar light"><div><b class="cnt" data-n="6">0</b>flavours</div><div><b class="cnt" data-n="4">0</b>cold drinks</div><div><b class="cnt" data-n="3">0</b>gift packs</div><div><b class="cnt" data-n="500">0</b>+ happy sippers</div></div>
+<section class="pg"><h2>From leaf to cup in 3 steps</h2><ol class="steps"><li>We buy hibiscus flowers from local farmers and dry them carefully.</li><li>We blend the flavours, test quality, and seal them in eco-friendly packaging.</li><li>You brew, sip, and share. Gift it, subscribe, or customise your own pack.</li></ol></section>
+<section class="pg"><div class="card quizcta"><div style="width:130px" class="bob">${cup('#c2185b','',false)}</div><div style="text-align:left"><h2>Not sure which flavour to try?</h2><p>Answer 3 quick questions and we will pick one for you.</p><a class="btn" href="#/quiz">Take the flavour quiz</a></div></div></section>
+<section class="pg"><h2>What our customers say</h2><div class="grid">${REVIEWS.slice(0,3).map(revCard).join('')}</div></section>
+<section class="pg"><div class="card" style="background:var(--wine);color:#fff"><h2 style="color:#fff">Get 10% off your next order</h2><p>Join our tea circle for new flavours, recipes and offers. No spam.</p><div style="display:flex;gap:10px;max-width:460px;margin:14px auto 0;flex-wrap:wrap"><input id="nl" type="email" placeholder="you@example.com" aria-label="Email"><button class="btn" style="background:var(--rose);color:var(--wine)" onclick="toast($('#nl').value?'Subscribed! Use code WELCOME10':'Enter your email first')">Join</button></div></div></section>`;
+after.home=()=>document.querySelectorAll('.cnt').forEach(e=>{const n=+e.dataset.n;let v=0;const t=setInterval(()=>{v=Math.min(n,v+Math.ceil(n/40));e.textContent=v;if(v>=n)clearInterval(t)},35)});
+
+/* ---- Teas: search + filter + wishlist ---- */
+pages.teas=()=>`<section class="pg"><h2>Tea flavours</h2><p>Search, filter, and save your favourites with the heart.</p><input id="sq" placeholder="Search, e.g. lemon, sweet, calm" aria-label="Search teas" style="max-width:420px;margin-top:12px"><div class="chips" id="fch">${['All','Citrus','Cooling','Sweet','Floral','Warm'].map((x,i)=>`<button class="chip ${i?'':'on'}" data-v="${x}">${x}</button>`).join('')}</div><div class="grid" id="tg"></div></section>`;
+after.teas=()=>{let f='All';const r=()=>{const q=$('#sq').value.toLowerCase(),l=TEAS.filter(t=>(f==='All'||t.tg.includes(f))&&(t.n+t.d+t.tg).toLowerCase().includes(q));$('#tg').innerHTML=l.length?l.map(teaCard).join(''):'<p>No flavour matches. Try another word or choose All.</p>'};
+ $('#sq').oninput=r;$('#fch').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('#fch .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');f=b.dataset.v;r()};r()};
+
+/* ---- Cart + checkout ---- */
+let CODE='';
+pages.cart=()=>{const m=store.me();if(!getC().length)return `<section class="pg"><div class="card"><h2>Your cart is empty</h2><p>Pick a tea or a gift pack to get started.</p><a class="btn" href="#/teas">Browse teas</a> <a class="btn alt" href="#/gifts">Gift packs</a></div></section>`;
+ return `<section class="pg"><h2>Your cart</h2><div class="two" style="align-items:start"><div><div id="ci"></div>
+ <div class="card" style="text-align:left;margin-top:16px"><b>Coupon code</b><div style="display:flex;gap:8px;margin-top:6px"><input id="cc" placeholder="e.g. FRESH15" value="${CODE}"><button class="btn" id="ca">Apply</button></div><div class="msg" id="cm"></div></div></div>
+ <div class="card" style="text-align:left"><div id="tot"></div><h3 style="margin-top:18px">Delivery details</h3>
+ <label for="dn">Full name</label><input id="dn" value="${m.name}"><label for="dp">Phone</label><input id="dp" type="tel" placeholder="03XX-XXXXXXX"><label for="da">Address</label><input id="da"><label for="dc">City</label><input id="dc" value="Mianwali">
+ <label for="py">Payment</label><select id="py"><option>Cash on delivery</option><option>JazzCash</option><option>EasyPaisa</option><option>Bank transfer</option></select>
+ <p style="margin-top:16px"><button class="btn" id="po">Place order</button></p><div class="msg" id="pm"></div></div></div></section>`};
+after.cart=()=>{if(!$('#ci'))return;
+ const draw=()=>{const c=getC(),t=calc(c,CODE);if(!c.length){route();return}
+  $('#ci').innerHTML=c.map((i,x)=>`<div class="card cl"><div><b>${i.n}</b><br><small>${rs(i.p)} each</small></div><div class="qty"><button data-a="-" data-x="${x}" aria-label="Less">−</button><span>${i.q}</span><button data-a="+" data-x="${x}" aria-label="More">+</button></div><b>${rs(i.p*i.q)}</b><button class="x" data-a="d" data-x="${x}" aria-label="Remove">✕</button></div>`).join('');
+  $('#tot').innerHTML=`<div class="row"><span>Subtotal</span><b>${rs(t.sub)}</b></div>${t.disc?`<div class="row"><span>Discount (${CODE})</span><b class="ok">− ${rs(t.disc)}</b></div>`:''}<div class="row"><span>Delivery</span><b>${t.ship?rs(t.ship):'Free'}</b></div><div class="row"><span>Total</span><b style="font-size:1.3rem;color:var(--red)">${rs(t.total)}</b></div>${t.sub-t.disc<FREE_SHIP?`<small>Add ${rs(FREE_SHIP-t.sub+t.disc)} more for free delivery.</small>`:''}`};
+ $('#ci').onclick=e=>{const b=e.target.closest('button');if(!b)return;const c=getC(),i=c[+b.dataset.x];if(b.dataset.a==='+')i.q++;else if(b.dataset.a==='-')i.q--;else i.q=0;setC(c.filter(x=>x.q>0));draw()};
+ $('#ca').onclick=()=>{const v=$('#cc').value.trim().toUpperCase(),cp=COUPONS[v],s=calc(getC(),'').sub;
+  if(!cp){CODE='';$('#cm').textContent='This code is not valid. See the Offers page for working codes.'}
+  else if(s<cp.min){CODE='';$('#cm').textContent='This code needs an order of at least '+rs(cp.min)+'.'}
+  else{CODE=v;$('#cm').className='msg ok';$('#cm').textContent=cp.d+' applied.'}draw()};
+ $('#po').onclick=()=>{const n=$('#dn').value.trim(),p=$('#dp').value.trim(),a=$('#da').value.trim(),ct=$('#dc').value.trim();
+  if(!n||!/^[0-9+\-\s]{10,15}$/.test(p)||!a||!ct)return $('#pm').textContent='Fill in your name, a valid phone number, address and city.';
+  const c=getC(),t=calc(c,CODE),id='HT'+String(Date.now()).slice(-6);
+  store.upd(m=>{(m.orders=m.orders||[]).unshift({id,items:c,total:t.total,pay:$('#py').value,city:ct,date:new Date().toLocaleDateString('en-GB')});m.points=(m.points||0)+Math.floor(t.total/10)});
+  setC([]);CODE='';$('#app').innerHTML=`<section class="pg"><div class="card" style="position:relative;overflow:hidden"><div class="spin" style="width:120px;margin:auto">${flower()}</div><h2>Order placed. Shukriya, ${n.split(' ')[0]}!</h2><p>Your order number is <b>${id}</b>. Total: <b>${rs(t.total)}</b> (${$('#py').value}). You earned ${Math.floor(t.total/10)} petal points.</p><p>Demo note: no real order is sent, this is a student project.</p><a class="btn" href="#/profile">View my orders</a> <a class="btn alt" href="#/teas">Keep shopping</a></div></section>`};
+ draw()};
+
+/* ---- Offers ---- */
+pages.offers=()=>{const m=store.me(),p=m.points||0;return `<section class="pg"><h2>Offers and savings</h2><p>Enter any of these codes in your cart.</p><div class="grid">${Object.entries(COUPONS).map(([k,v])=>`<div class="card coupon"><h3>${k}</h3><p>${v.d}</p><button class="btn alt" onclick="navigator.clipboard&&navigator.clipboard.writeText('${k}').catch(()=>{});toast('Code ${k} copied')">Copy code</button></div>`).join('')}</div>
+<h2 style="margin-top:46px">Subscribe and save</h2><div class="grid">${[['Monthly Sip','1 pack every month','Save 10%'],['Family Plan','2 packs every month','Save 15%'],['Office Pantry','5 packs every month','Save 20%']].map(([n,d,s])=>`<div class="card"><div style="width:70px;margin:auto" class="bob">${flower('#e0587a')}</div><h3>${n}</h3><p>${d}</p><span class="tag">${s}</span><p style="margin-top:10px"><button class="btn ${m.plan===n?'alt':''}" onclick="store.upd(u=>u.plan='${n}');toast('Subscribed to ${n}');route()">${m.plan===n?'Subscribed':'Subscribe'}</button></p></div>`).join('')}</div>
+<h2 style="margin-top:46px">Petal points</h2><div class="card" style="text-align:left"><p>Earn 1 point for every Rs 10 you spend. You have <b>${p} points</b> and your level is <b>${tier(p)}</b>.</p><div class="prog"><i style="width:${Math.min(100,p/15)}%"></i></div><p><small>Bud: 0 to 499. Bloom: 500 to 1,499. Petal Pro: 1,500 and up (early access to new flavours).</small></p></div></section>`};
+
+/* ---- Benefits ---- */
+pages.benefits=()=>`<section class="pg"><h2>Benefits of hibiscus tea</h2><p>Why this tangy red flower is worth a place in your daily routine.</p><div class="grid">${[['Packed with antioxidants','Hibiscus gets its deep red colour from anthocyanins, plant compounds studied for their antioxidant activity.'],['Zero caffeine','No jitters and no late-night wakefulness. A good swap for your 4th cup of chai.'],['Light and low in calories','Unsweetened hibiscus tea has almost no calories. Add honey only if you like.'],['Refreshing in summer','Chilled hibiscus is a great alternative to sugary soft drinks.'],['Good after meals','A warm cup of mint hibiscus is a pleasant end to a heavy dinner.'],['Supports heart-healthy habits','Some studies link hibiscus to healthy blood pressure, but it is not a medicine.']].map(([a,b])=>`<div class="card"><div style="width:56px;margin:auto" class="sway">${flower()}</div><h3>${a}</h3><p>${b}</p></div>`).join('')}</div>
+<div class="card note"><b>Please note:</b> hibiscus tea is a food, not a treatment. If you are pregnant, or take medicine for blood pressure or diabetes, check with your doctor before drinking it daily.</div></section>`;
+
+/* ---- Recipes ---- */
+const RECIPES=[
+['Hibiscus Iced Cooler',glass('#d6203f','#f7b6c2','lemon'),'10 min + chilling','4 hibiscus tea bags|1 litre hot water|4 tbsp honey or sugar|1 lemon|Ice cubes','Steep the tea bags in hot water for 5 minutes.|Remove the bags, stir in honey, cool for 15 minutes.|Add lemon slices, pour over ice, serve.'],
+['Pudina Mojito',glass('#9c1038','#f7b6c2','mint'),'8 min','2 tea bags|Fresh pudina leaves|1 lime|Soda water|Ice','Brew a strong 200 ml cup and let it cool.|Crush pudina with lime juice in a glass.|Add ice, pour tea, top with soda.'],
+['Gulab Hibiscus Sharbat',glass('#e0587a','#fbd5dc','flower'),'10 min','3 tea bags|1 tbsp rose syrup|Cold milk or water|Ice','Brew tea with 300 ml water, cool completely.|Mix in rose syrup.|Serve over ice. For a creamy version, add a splash of cold milk.'],
+['Winter Ginger Hibiscus',cup('#a8281c','',false),'7 min','1 ginger hibiscus tea bag|Honey|A small piece of fresh adrak','Add a few adrak slices to boiling water.|Pour over the tea bag, steep 7 minutes.|Stir in honey and enjoy hot.']];
+pages.recipes=()=>`<section class="pg"><h2>Recipes</h2><p>Tap a recipe to open it.</p>${RECIPES.map(([n,s,t,i,st],x)=>`<details class="acc" ${x?'':'open'}><summary>${n} <span class="tag">${t}</span></summary><div class="two" style="margin-top:12px"><div style="width:130px;margin:auto">${s}</div><div><b>You need</b><ul>${i.split('|').map(a=>`<li>${a}</li>`).join('')}</ul><b>Method</b><ol>${st.split('|').map(a=>`<li>${a}</li>`).join('')}</ol></div></div></details>`).join('')}</section>`;
+
+/* ---- Quiz ---- */
+const QZ=[['What sounds best right now?',[['Something zesty',1],['Cool and calming',2],['Sweet and cozy',3],['Soft and floral',4]]],['When will you drink it?',[['Morning',1],['After lunch',2],['Evening',3],['Late at night',4]]],['What is the weather like?',[['Hot summer day',2],['Cold winter night',5],['Rainy afternoon',3],['Any day, keep it classic',0]]]];
+pages.quiz=()=>`<section class="pg"><div class="form" style="max-width:520px;text-align:center" id="qb"></div></section>`;
+after.quiz=()=>{let i=0;const v=[];const draw=()=>{if(i<QZ.length){const[q,o]=QZ[i];$('#qb').innerHTML=`<small>Question ${i+1} of ${QZ.length}</small><h2>${q}</h2>${o.map(([t,k])=>`<p><button class="btn alt" style="width:100%" data-k="${k}">${t}</button></p>`).join('')}`}
+  else{const c={};v.forEach(k=>c[k]=(c[k]||0)+1);const w=+Object.keys(c).sort((a,b)=>c[b]-c[a]||v.indexOf(+a)-v.indexOf(+b))[0],t=TEAS[w];
+   $('#qb').innerHTML=`<h2>Your match: ${t.n}</h2><div style="width:200px;margin:auto">${cup(t.c,'',true)}</div><p>${t.d}</p><p><button class="btn" onclick="add('${t.n}')">Add to cart</button> <button class="btn alt" id="qr">Try again</button></p>`;$('#qr').onclick=()=>{i=0;v.length=0;draw()}}};
+ $('#qb').onclick=e=>{const b=e.target.closest('[data-k]');if(!b)return;v.push(+b.dataset.k);i++;draw()};draw()};
+
+/* ---- Reviews ---- */
+const REVIEWS=[{n:'Ayesha K.',c:'Lahore',s:5,t:'The lemon hibiscus iced is now my exam-week drink. Tangy and no caffeine headache.'},{n:'Hamza R.',c:'Islamabad',s:5,t:'Ordered the Family Chai Time pack for my mother. The packaging was beautiful.'},{n:'Sana M.',c:'Karachi',s:4,t:'Rose hibiscus smells amazing. I would like a bigger pack size.'},{n:'Bilal A.',c:'Mianwali',s:5,t:'Ginger hibiscus is perfect in the cold mornings here.'}];
+const revCard=r=>`<div class="card" style="text-align:left"><div class="stars">${star(r.s)}</div><p>${r.t}</p><b>${r.n}</b> <small>${r.c}</small></div>`;
+pages.reviews=()=>{const mine=JSON.parse(localStorage.ht_reviews||'[]');return `<section class="pg"><h2>Customer reviews</h2><p><small>The first four are sample reviews for this demo.</small></p><div class="grid">${[...mine,...REVIEWS].map(revCard).join('')}</div>
+<div class="form" style="max-width:520px"><h3>Write a review</h3><label>Rating</label><select id="rs">${[5,4,3,2,1].map(n=>`<option value="${n}">${star(n)}</option>`).join('')}</select><label for="rt">Your review</label><textarea id="rt" rows="3"></textarea><p style="margin-top:14px"><button class="btn" id="rb2">Post review</button></p><div class="msg" id="rm"></div></div></section>`};
+after.reviews=()=>$('#rb2').onclick=()=>{const t=$('#rt').value.trim();if(t.length<10)return $('#rm').textContent='Write at least 10 characters.';const m=store.me(),a=JSON.parse(localStorage.ht_reviews||'[]');a.unshift({n:m.name,c:'You',s:+$('#rs').value,t});localStorage.ht_reviews=JSON.stringify(a);toast('Review posted');route()};
+
+/* ---- FAQ ---- */
+pages.faq=()=>`<section class="pg"><h2>Frequently asked questions</h2>${[['Is hibiscus tea caffeine-free?','Yes. It is made from flowers, not tea leaves, so it has no caffeine.'],['How should I store it?','Keep it in its sealed tin or pouch, away from sunlight and moisture. Use within 12 months.'],['Can I drink it cold?','Yes. Brew it strong, let it cool, and pour over ice. See our Cold Drinks page.'],['How long should I steep it?','Between 4 and 7 minutes depending on flavour. Use the timer on the How to Brew page.'],['Do you deliver across Pakistan?','Yes, in this project delivery costs Rs 200, and is free above Rs 3,000.'],['Can I make my own gift pack?','Yes. Use the Customize page to choose the shape, colour and name.'],['Is it safe for everyone?','Most adults can enjoy it. If you are pregnant or on blood pressure medicine, ask your doctor first.']].map(([q,a])=>`<details class="acc"><summary>${q}</summary><p style="margin-top:8px">${a}</p></details>`).join('')}</section>`;
+
+/* ---- Contact ---- */
+pages.contact=()=>`<section class="pg"><h2>Contact us</h2><div class="two" style="align-items:start"><div class="card" style="text-align:left"><h3>Say hello</h3><p>Questions about orders, bulk gifting or cafe partnerships? Send us a message.</p><div class="row"><span>Email</span><b>hello@hibiscustea.example</b></div><div class="row"><span>Based in</span><b>Mianwali, Punjab</b></div><div class="row"><span>Hours</span><b>Mon to Sat, 10am to 6pm</b></div><p><small>Contact details are placeholders for this student project.</small></p></div>
+<div class="form" style="margin:0"><label for="cn2">Subject</label><select id="cn2"><option>Order help</option><option>Bulk or gift order</option><option>Cafe or retail partnership</option><option>Feedback</option></select><label for="cm2">Message</label><textarea id="cm2" rows="4"></textarea><p style="margin-top:14px"><button class="btn" id="cb">Send message</button></p><div class="msg" id="cmm"></div></div></div></section>`;
+after.contact=()=>$('#cb').onclick=()=>{const t=$('#cm2').value.trim();if(t.length<10)return $('#cmm').textContent='Write at least 10 characters so we can help.';const a=JSON.parse(localStorage.ht_msgs||'[]');a.push({s:$('#cn2').value,t});localStorage.ht_msgs=JSON.stringify(a);$('#cm2').value='';$('#cmm').className='msg ok';$('#cmm').textContent='Message sent. We will reply within 2 days.'};
+
+/* ---- Profile additions ---- */
+function accountHTML(m){const p=m.points||0,w=wl();return `<h3 style="margin-top:22px">My account</h3><div class="row"><span>Petal points</span><b>${p} (${tier(p)})</b></div><div class="row"><span>Subscription</span><b>${m.plan||'None'}</b></div><div class="row"><span>Wishlist</span><b>${w.length?w.join(', '):'Empty. Tap the heart on a tea.'}</b></div><h3 style="margin-top:18px">My orders</h3>${(m.orders||[]).length?m.orders.slice(0,5).map(o=>`<div class="row"><span>${o.id} <small>${o.date}</small></span><b>${rs(o.total)}</b></div>`).join(''):'<p>No orders yet.</p>'}`}
+
+/* ================= RICH LOGIN / REGISTER ================= */
+const authArt=()=>{let p='',e='';
+ for(let i=0;i<14;i++)p+=`<div class="petal" style="left:${Math.random()*100}%;animation-duration:${7+Math.random()*8}s;animation-delay:-${Math.random()*10}s;width:${16+Math.random()*16}px">${flower(i%2?'#f7b6c2':'#ff5f7e','#7a0f2e')}</div>`;
+ ['🌺','🍵','🧊','🍋','🌿','🍯','🫖','🥤','🌸','🍓'].forEach((x,i)=>e+=`<span class="emo" style="left:${4+i*9.5}%;top:${(8+i*29)%70}%;animation-delay:-${i*.7}s;font-size:${1.4+(i%3)*.5}rem">${x}</span>`);
+ return `<div class="aart">${p}${e}
+ <div class="abrand"><div class="alogo">${flower('#f7b6c2','#fff')}</div><h1>Hibiscus Tea</h1><p>A natural sip of freshness 🌺</p>
+ <div class="achips"><span>🍵 6 flavours</span><span>🧊 Cold drinks</span><span>🎁 Gift packs</span><span>⏱️ Brew timer</span><span>🎨 Custom packs</span></div></div>
+ <div class="a-fl1 spin">${flower()}</div><div class="a-fl2 sway">${flower('#e0587a')}</div><div class="a-fl3 spin">${flower('#f06a86')}</div>
+ <div class="a-gl1 bob">${glass('#d6203f','#f7b6c2','lemon')}</div><div class="a-cup bob">${cup('#b01030','',true)}</div><div class="a-gl2 sway">${glass('#9c1038','#f7b6c2','mint')}</div><div class="a-lf">${leaf('sway')}</div></div>`};
+const authShell=(mode,body)=>`<div class="auth">${authArt()}<div class="aform"><div class="ainner"><div class="atabs"><a href="#/login" class="${mode==='login'?'on':''}">Log in</a><a href="#/register" class="${mode==='register'?'on':''}">Register</a></div>${body}</div></div></div>`;
+const pw=(id,ph,ac)=>`<div class="pw"><input id="${id}" type="password" placeholder="${ph}" autocomplete="${ac}"><button type="button" class="eye" aria-label="Show or hide password" onclick="const i=this.previousElementSibling;i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button></div>`;
+pages.login=()=>authShell('login',`<h2>Welcome back 🍵</h2><p class="sub">Log in to continue your tea journey.</p>
+<label for="e">📧 Email</label><input id="e" type="email" placeholder="you@example.com" autocomplete="email" value="${localStorage.ht_rem||''}">
+<label for="p">🔒 Password</label>${pw('p','Your password','current-password')}
+<div class="row" style="border:0"><label style="margin:0;font-weight:600"><input type="checkbox" id="rm" style="width:auto" ${localStorage.ht_rem?'checked':''}> Remember my email</label></div>
+<button class="btn wide" id="lb">Log in 🌺</button><div class="msg" id="m"></div>
+<p class="alt-link">New here? <a href="#/register">Create a free account</a></p>`);
+pages.register=()=>authShell('register',`<h2>Join Hibiscus Tea 🌺</h2><p class="sub">Create your account and get <b>10% off</b> with code <b>WELCOME10</b>.</p>
+<label for="n">👤 Full name</label><input id="n" placeholder="Your name" autocomplete="name">
+<label for="e">📧 Email</label><input id="e" type="email" placeholder="you@example.com" autocomplete="email">
+<label for="p">🔒 Password (min 6)</label>${pw('p','Create a password','new-password')}
+<div class="meter"><i id="mt"></i></div><small id="ml">Use 10+ characters with a number and a capital letter.</small>
+<label for="p2">✅ Confirm password</label>${pw('p2','Repeat password','new-password')}
+<button class="btn wide" id="rb" style="margin-top:18px">Create account 🍵</button><div class="msg" id="m"></div>
+<p class="alt-link">Already registered? <a href="#/login">Log in</a></p>`);
+const _al=after.login,_ar=after.register;
+const enter=b=>document.querySelectorAll('.ainner input').forEach(i=>i.onkeydown=e=>{if(e.key==='Enter')$(b).click()});
+after.login=()=>{_al();$('#lb').addEventListener('click',()=>{$('#rm').checked?localStorage.ht_rem=$('#e').value.trim().toLowerCase():localStorage.removeItem('ht_rem')});enter('#lb')};
+after.register=()=>{_ar();enter('#rb');$('#p').oninput=e=>{const v=e.target.value,s=(v.length>=6)+(v.length>=10)+/[A-Z]/.test(v)+/\d/.test(v)+/[^\w\s]/.test(v);
+ $('#mt').style.width=s*20+'%';$('#mt').style.background=['#ccc','#e53935','#f4511e','#f9a825','#7cb342','#2e7d32'][s];$('#ml').textContent=v?['Too weak','Weak','Okay','Good','Strong','Very strong 💪'][s]:'Use 10+ characters with a number and a capital letter.'}};
+
+/* ---------- Router ---------- */
+function route(){
+ const me=store.me(),open=['login','register'];
+ let k=(location.hash||'').slice(2);
+ if(!pages[k])k=me?'home':'register';
+ if(!me&&!open.includes(k))k='register';
+ if(me&&open.includes(k))k='home';
+ if(location.hash!=='#/'+k){location.hash='#/'+k;return}
+ const pg=k;
+ $('#app').innerHTML=pages[pg]();applyPrefs();renderNav();window.scrollTo(0,0);
+ if(after[pg]&&$('#app').innerHTML)after[pg]();
+}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
