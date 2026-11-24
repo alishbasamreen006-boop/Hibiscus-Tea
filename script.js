@@ -58,18 +58,17 @@ const store={
  me:()=>store.users().find(u=>u.email===localStorage.ht_me),
  upd(fn){const us=store.users(),m=us.find(u=>u.email===localStorage.ht_me);if(m){fn(m);store.save(us)}}
 };
-let cart=+(localStorage.ht_cart||0);
 function toast(m){const t=$('#toast');t.textContent=m;t.className='show';setTimeout(()=>t.className='',2200)}
-function add(n){cart++;localStorage.ht_cart=cart;toast(n+' added to cart ('+cart+')');renderNav()}
 function applyPrefs(){const m=store.me();document.body.classList.toggle('dark',!!(m&&m.dark));document.body.classList.toggle('noanim',!!(m&&m.noanim))}
 
 /* ---------- Nav ---------- */
-const LINKS=[['home','Home'],['teas','Teas'],['cold','Cold Drinks'],['howto','How to Brew'],['gifts','Gift Packs'],['custom','Customize'],['about','About']];
+const LINKS=[['home','Home'],['teas','Teas'],['cold','Cold Drinks'],['howto','How to Brew'],['gifts','Gift Packs'],['custom','Customize'],['offers','Offers']];
+const MORE=[['benefits','Benefits'],['recipes','Recipes'],['quiz','Flavour Quiz'],['reviews','Reviews'],['faq','FAQ'],['contact','Contact'],['about','About']];
 function renderNav(){
  const m=store.me(),h=(location.hash||'#/home').slice(2);
  $('#lg').innerHTML=flower('#f7b6c2','#fff','');
- $('#nav').innerHTML=(m?LINKS:[]).map(([k,l])=>`<a href="#/${k}" class="${h===k?'on':''}">${l}</a>`).join('')+
- (m?`<a href="#/gifts">Cart (${cart})</a>`:'')+
+ $('#nav').innerHTML=(m?LINKS:[]).map(lk).join('')+(m?`<details class="more"><summary>More</summary><div>${MORE.map(lk).join('')}</div></details>`:'')+
+ (m?`<a href="#/cart" class="${h==='cart'?'on':''}">Cart (${cartCount()})</a>`:'')+
  (m?`<a href="#/profile" aria-label="Profile">${m.pic?`<img class="avatar" src="${m.pic}" alt="">`:`<span class="avatar">${m.name[0].toUpperCase()}</span>`}</a>`
    :`<a href="#/login">Login</a><a href="#/register" class="on">Register</a>`)}
 
@@ -81,7 +80,7 @@ home(){
  <div><h1>A natural sip of freshness.</h1><p>Caffeine-free hibiscus tea, hot or iced, grown by local farmers and packed in eco-friendly boxes. Rich in antioxidants, light on your pocket.</p>
  <a class="btn" href="#/teas">Shop teas</a> <a class="btn alt" href="#/cold">Cold drinks</a></div>
  <div class="art">${cup('#b01030','cup')}<div class="fl sway" style="width:120px;left:2%;top:4%">${flower()}</div><div class="fl spin" style="width:90px;right:4%;top:10%">${flower('#e0587a','#7a0f2e')}</div><div class="fl bob" style="width:60px;left:12%;bottom:6%">${leaf()}</div><div class="fl sway" style="width:100px;right:2%;bottom:2%">${flower('#f06a86','#7a0f2e')}</div></div></div>
- <div class="bar"><div><b>100% natural</b>No artificial colour</div><div><b>Caffeine-free</b>Safe for the evening</div><div><b>Rs 650 onwards</b>Affordable and convenient</div><div><b>Eco packaging</b>Recyclable boxes</div></div>
+ <div class="bar"><div><b>Delivery across Pakistan</b>Free above Rs 3,000</div><div><b>Fresh weekly batches</b>Never stale, always fragrant</div><div><b>10% off your first order</b>Code WELCOME10</div><div><b>Local flowers</b>Supporting our farmers</div></div>
  <section class="pg"><h2>Our favourite flavours</h2><div class="grid">${TEAS.slice(0,3).map(teaCard).join('')}</div>
  <h2 style="margin-top:50px">Cool down with a glass</h2><div class="grid">${COLD.slice(0,2).map(coldCard).join('')}</div></section>`},
 teas(){return `<section class="pg"><h2>Tea flavours</h2><p>Every cup is a different colour. Pick one and add it to your cart.</p><div class="grid">${TEAS.map(teaCard).join('')}</div></section>`},
@@ -116,9 +115,9 @@ profile(){const m=store.me();if(!m){location.hash='#/login';return ''}
  <div class="row"><span>Dark mode</span><input type="checkbox" id="dk" style="width:22px" ${m.dark?'checked':''}></div>
  <div class="row"><span>Turn off animations</span><input type="checkbox" id="na" style="width:22px" ${m.noanim?'checked':''}></div>
  <p style="margin-top:18px"><button class="btn" id="sv">Save changes</button> <button class="btn alt" id="lo">Log out</button></p><div class="msg ok" id="m"></div>
- ${m.design?`<h3 style="margin-top:20px">Your saved design</h3><div style="width:150px;margin:auto">${tin(m.design.c,m.design.n,m.design.s)}</div>`:''}</div></section>`}
+ ${accountHTML(m)}${m.design?`<h3 style="margin-top:20px">Your saved design</h3><div style="width:150px;margin:auto">${tin(m.design.c,m.design.n,m.design.s)}</div>`:''}</div></section>`}
 };
-function teaCard(t){return `<div class="card">${cup(t.c,'item',false)}<h3>${t.n}</h3><div>${t.tg.map(x=>`<span class="tag">${x}</span>`).join('')}<span class="tag">${t.t} min</span></div><p>${t.d}</p><div class="price">Rs ${t.p}</div><button class="btn" onclick="add('${t.n}')">Add to cart</button></div>`}
+function teaCard(t){return `<div class="card" style="position:relative"><button class="heart ${wl().includes(t.n)?'on':''}" aria-label="Add to wishlist" onclick="wish('${t.n}',this)">♥</button>${cup(t.c,'item',false)}<h3>${t.n}</h3><div>${t.tg.map(x=>`<span class="tag">${x}</span>`).join('')}<span class="tag">${t.t} min</span></div><p>${t.d}</p><div class="price">Rs ${t.p}</div><button class="btn" onclick="add('${t.n}')">Add to cart</button></div>`}
 function coldCard(c){return `<div class="card">${glass(c.l,'#f7b6c2',c.g,'item')}<h3>${c.n}</h3><p>${c.d}</p><div class="price">Rs ${c.p}</div><button class="btn" onclick="add('${c.n}')">Add to cart</button></div>`}
 
 /* ---------- Page behaviours ---------- */
@@ -157,6 +156,107 @@ profile(){
  $('#sv').onclick=()=>{store.upd(m=>{m.name=$('#n').value.trim()||m.name;m.dark=$('#dk').checked;m.noanim=$('#na').checked});applyPrefs();renderNav();$('#m').textContent='Settings saved.'};
  $('#lo').onclick=()=>{localStorage.removeItem('ht_me');applyPrefs();location.hash='#/register'}}
 };
+
+/* ================= EXTRA FEATURES ================= */
+const ALL=[...TEAS,...COLD,...PACKS,{n:'Custom pack',p:1200}];
+const getC=()=>JSON.parse(localStorage.ht_cart2||'[]');
+const setC=c=>{localStorage.ht_cart2=JSON.stringify(c);renderNav()};
+const cartCount=()=>getC().reduce((s,i)=>s+i.q,0);
+const rs=n=>'Rs '+Math.round(n).toLocaleString('en-US');
+function add(n){const it=ALL.find(x=>x.n===n);if(!it)return;const c=getC(),f=c.find(x=>x.n===n);f?f.q++:c.push({n,p:it.p,q:1});setC(c);toast(n+' added to cart ('+cartCount()+')')}
+const wl=()=>JSON.parse(localStorage.ht_wish||'[]');
+function wish(n,b){let w=wl();w=w.includes(n)?w.filter(x=>x!==n):[...w,n];localStorage.ht_wish=JSON.stringify(w);b.classList.toggle('on',w.includes(n));toast(w.includes(n)?'Saved to your wishlist':'Removed from your wishlist')}
+const lk=([k,l])=>`<a href="#/${k}" class="${(location.hash||'').slice(2)===k?'on':''}">${l}</a>`;
+const COUPONS={FRESH15:{pct:15,min:0,d:'15% off your whole order'},WELCOME10:{pct:10,min:0,d:'10% off for new members'},EID20:{pct:20,min:5000,d:'20% off orders above Rs 5,000'}};
+const FREE_SHIP=3000,SHIP=200;
+function calc(c,code){const sub=c.reduce((s,i)=>s+i.p*i.q,0),cp=COUPONS[code],disc=cp&&sub>=cp.min?sub*cp.pct/100:0,ship=sub-disc>=FREE_SHIP||!sub?0:SHIP;return{sub,disc,ship,total:sub-disc+ship}}
+const tier=p=>p>=1500?'Petal Pro':p>=500?'Bloom':'Bud';
+const star=n=>'★'.repeat(n)+'☆'.repeat(5-n);
+
+/* ---- Home: promo strip, extra sections ---- */
+const _home=pages.home;
+pages.home=()=>`<div class="strip">Use code <b>FRESH15</b> for 15% off. Free delivery on orders above Rs 3,000.</div>`+_home()+`
+<section class="pg"><h2>Why people switch to hibiscus</h2><div class="grid">${[['Antioxidant rich','Hibiscus is full of natural plant colour compounds called anthocyanins.'],['Caffeine-free','Drink it at 10 pm and still sleep well.'],['Hot or iced','One tea bag, two moods: warm chai-time cup or a chilled glass.'],['Naturally tangy','A tart, cranberry-like taste with no need for artificial flavour.']].map(([a,b])=>`<div class="card"><div style="width:60px;margin:auto" class="sway">${flower('#e0587a')}</div><h3>${a}</h3><p>${b}</p></div>`).join('')}</div>
+<p style="text-align:center;margin-top:20px"><a class="btn alt" href="#/benefits">Read all benefits</a></p></section>
+<div class="bar light"><div><b class="cnt" data-n="6">0</b>flavours</div><div><b class="cnt" data-n="4">0</b>cold drinks</div><div><b class="cnt" data-n="3">0</b>gift packs</div><div><b class="cnt" data-n="500">0</b>+ happy sippers</div></div>
+<section class="pg"><h2>From leaf to cup in 3 steps</h2><ol class="steps"><li>We buy hibiscus flowers from local farmers and dry them carefully.</li><li>We blend the flavours, test quality, and seal them in eco-friendly packaging.</li><li>You brew, sip, and share. Gift it, subscribe, or customise your own pack.</li></ol></section>
+<section class="pg"><div class="card quizcta"><div style="width:130px" class="bob">${cup('#c2185b','',false)}</div><div style="text-align:left"><h2>Not sure which flavour to try?</h2><p>Answer 3 quick questions and we will pick one for you.</p><a class="btn" href="#/quiz">Take the flavour quiz</a></div></div></section>
+<section class="pg"><h2>What our customers say</h2><div class="grid">${REVIEWS.slice(0,3).map(revCard).join('')}</div></section>
+<section class="pg"><div class="card" style="background:var(--wine);color:#fff"><h2 style="color:#fff">Get 10% off your next order</h2><p>Join our tea circle for new flavours, recipes and offers. No spam.</p><div style="display:flex;gap:10px;max-width:460px;margin:14px auto 0;flex-wrap:wrap"><input id="nl" type="email" placeholder="you@example.com" aria-label="Email"><button class="btn" style="background:var(--rose);color:var(--wine)" onclick="toast($('#nl').value?'Subscribed! Use code WELCOME10':'Enter your email first')">Join</button></div></div></section>`;
+after.home=()=>document.querySelectorAll('.cnt').forEach(e=>{const n=+e.dataset.n;let v=0;const t=setInterval(()=>{v=Math.min(n,v+Math.ceil(n/40));e.textContent=v;if(v>=n)clearInterval(t)},35)});
+
+/* ---- Teas: search + filter + wishlist ---- */
+pages.teas=()=>`<section class="pg"><h2>Tea flavours</h2><p>Search, filter, and save your favourites with the heart.</p><input id="sq" placeholder="Search, e.g. lemon, sweet, calm" aria-label="Search teas" style="max-width:420px;margin-top:12px"><div class="chips" id="fch">${['All','Citrus','Cooling','Sweet','Floral','Warm'].map((x,i)=>`<button class="chip ${i?'':'on'}" data-v="${x}">${x}</button>`).join('')}</div><div class="grid" id="tg"></div></section>`;
+after.teas=()=>{let f='All';const r=()=>{const q=$('#sq').value.toLowerCase(),l=TEAS.filter(t=>(f==='All'||t.tg.includes(f))&&(t.n+t.d+t.tg).toLowerCase().includes(q));$('#tg').innerHTML=l.length?l.map(teaCard).join(''):'<p>No flavour matches. Try another word or choose All.</p>'};
+ $('#sq').oninput=r;$('#fch').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('#fch .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');f=b.dataset.v;r()};r()};
+
+/* ---- Cart + checkout ---- */
+let CODE='';
+pages.cart=()=>{const m=store.me();if(!getC().length)return `<section class="pg"><div class="card"><h2>Your cart is empty</h2><p>Pick a tea or a gift pack to get started.</p><a class="btn" href="#/teas">Browse teas</a> <a class="btn alt" href="#/gifts">Gift packs</a></div></section>`;
+ return `<section class="pg"><h2>Your cart</h2><div class="two" style="align-items:start"><div><div id="ci"></div>
+ <div class="card" style="text-align:left;margin-top:16px"><b>Coupon code</b><div style="display:flex;gap:8px;margin-top:6px"><input id="cc" placeholder="e.g. FRESH15" value="${CODE}"><button class="btn" id="ca">Apply</button></div><div class="msg" id="cm"></div></div></div>
+ <div class="card" style="text-align:left"><div id="tot"></div><h3 style="margin-top:18px">Delivery details</h3>
+ <label for="dn">Full name</label><input id="dn" value="${m.name}"><label for="dp">Phone</label><input id="dp" type="tel" placeholder="03XX-XXXXXXX"><label for="da">Address</label><input id="da"><label for="dc">City</label><input id="dc" value="Mianwali">
+ <label for="py">Payment</label><select id="py"><option>Cash on delivery</option><option>JazzCash</option><option>EasyPaisa</option><option>Bank transfer</option></select>
+ <p style="margin-top:16px"><button class="btn" id="po">Place order</button></p><div class="msg" id="pm"></div></div></div></section>`};
+after.cart=()=>{if(!$('#ci'))return;
+ const draw=()=>{const c=getC(),t=calc(c,CODE);if(!c.length){route();return}
+  $('#ci').innerHTML=c.map((i,x)=>`<div class="card cl"><div><b>${i.n}</b><br><small>${rs(i.p)} each</small></div><div class="qty"><button data-a="-" data-x="${x}" aria-label="Less">−</button><span>${i.q}</span><button data-a="+" data-x="${x}" aria-label="More">+</button></div><b>${rs(i.p*i.q)}</b><button class="x" data-a="d" data-x="${x}" aria-label="Remove">✕</button></div>`).join('');
+  $('#tot').innerHTML=`<div class="row"><span>Subtotal</span><b>${rs(t.sub)}</b></div>${t.disc?`<div class="row"><span>Discount (${CODE})</span><b class="ok">− ${rs(t.disc)}</b></div>`:''}<div class="row"><span>Delivery</span><b>${t.ship?rs(t.ship):'Free'}</b></div><div class="row"><span>Total</span><b style="font-size:1.3rem;color:var(--red)">${rs(t.total)}</b></div>${t.sub-t.disc<FREE_SHIP?`<small>Add ${rs(FREE_SHIP-t.sub+t.disc)} more for free delivery.</small>`:''}`};
+ $('#ci').onclick=e=>{const b=e.target.closest('button');if(!b)return;const c=getC(),i=c[+b.dataset.x];if(b.dataset.a==='+')i.q++;else if(b.dataset.a==='-')i.q--;else i.q=0;setC(c.filter(x=>x.q>0));draw()};
+ $('#ca').onclick=()=>{const v=$('#cc').value.trim().toUpperCase(),cp=COUPONS[v],s=calc(getC(),'').sub;
+  if(!cp){CODE='';$('#cm').textContent='This code is not valid. See the Offers page for working codes.'}
+  else if(s<cp.min){CODE='';$('#cm').textContent='This code needs an order of at least '+rs(cp.min)+'.'}
+  else{CODE=v;$('#cm').className='msg ok';$('#cm').textContent=cp.d+' applied.'}draw()};
+ $('#po').onclick=()=>{const n=$('#dn').value.trim(),p=$('#dp').value.trim(),a=$('#da').value.trim(),ct=$('#dc').value.trim();
+  if(!n||!/^[0-9+\-\s]{10,15}$/.test(p)||!a||!ct)return $('#pm').textContent='Fill in your name, a valid phone number, address and city.';
+  const c=getC(),t=calc(c,CODE),id='HT'+String(Date.now()).slice(-6);
+  store.upd(m=>{(m.orders=m.orders||[]).unshift({id,items:c,total:t.total,pay:$('#py').value,city:ct,date:new Date().toLocaleDateString('en-GB')});m.points=(m.points||0)+Math.floor(t.total/10)});
+  setC([]);CODE='';$('#app').innerHTML=`<section class="pg"><div class="card" style="position:relative;overflow:hidden"><div class="spin" style="width:120px;margin:auto">${flower()}</div><h2>Order placed. Shukriya, ${n.split(' ')[0]}!</h2><p>Your order number is <b>${id}</b>. Total: <b>${rs(t.total)}</b> (${$('#py').value}). You earned ${Math.floor(t.total/10)} petal points.</p><p>Demo note: no real order is sent, this is a student project.</p><a class="btn" href="#/profile">View my orders</a> <a class="btn alt" href="#/teas">Keep shopping</a></div></section>`};
+ draw()};
+
+/* ---- Offers ---- */
+pages.offers=()=>{const m=store.me(),p=m.points||0;return `<section class="pg"><h2>Offers and savings</h2><p>Enter any of these codes in your cart.</p><div class="grid">${Object.entries(COUPONS).map(([k,v])=>`<div class="card coupon"><h3>${k}</h3><p>${v.d}</p><button class="btn alt" onclick="navigator.clipboard&&navigator.clipboard.writeText('${k}').catch(()=>{});toast('Code ${k} copied')">Copy code</button></div>`).join('')}</div>
+<h2 style="margin-top:46px">Subscribe and save</h2><div class="grid">${[['Monthly Sip','1 pack every month','Save 10%'],['Family Plan','2 packs every month','Save 15%'],['Office Pantry','5 packs every month','Save 20%']].map(([n,d,s])=>`<div class="card"><div style="width:70px;margin:auto" class="bob">${flower('#e0587a')}</div><h3>${n}</h3><p>${d}</p><span class="tag">${s}</span><p style="margin-top:10px"><button class="btn ${m.plan===n?'alt':''}" onclick="store.upd(u=>u.plan='${n}');toast('Subscribed to ${n}');route()">${m.plan===n?'Subscribed':'Subscribe'}</button></p></div>`).join('')}</div>
+<h2 style="margin-top:46px">Petal points</h2><div class="card" style="text-align:left"><p>Earn 1 point for every Rs 10 you spend. You have <b>${p} points</b> and your level is <b>${tier(p)}</b>.</p><div class="prog"><i style="width:${Math.min(100,p/15)}%"></i></div><p><small>Bud: 0 to 499. Bloom: 500 to 1,499. Petal Pro: 1,500 and up (early access to new flavours).</small></p></div></section>`};
+
+/* ---- Benefits ---- */
+pages.benefits=()=>`<section class="pg"><h2>Benefits of hibiscus tea</h2><p>Why this tangy red flower is worth a place in your daily routine.</p><div class="grid">${[['Packed with antioxidants','Hibiscus gets its deep red colour from anthocyanins, plant compounds studied for their antioxidant activity.'],['Zero caffeine','No jitters and no late-night wakefulness. A good swap for your 4th cup of chai.'],['Light and low in calories','Unsweetened hibiscus tea has almost no calories. Add honey only if you like.'],['Refreshing in summer','Chilled hibiscus is a great alternative to sugary soft drinks.'],['Good after meals','A warm cup of mint hibiscus is a pleasant end to a heavy dinner.'],['Supports heart-healthy habits','Some studies link hibiscus to healthy blood pressure, but it is not a medicine.']].map(([a,b])=>`<div class="card"><div style="width:56px;margin:auto" class="sway">${flower()}</div><h3>${a}</h3><p>${b}</p></div>`).join('')}</div>
+<div class="card note"><b>Please note:</b> hibiscus tea is a food, not a treatment. If you are pregnant, or take medicine for blood pressure or diabetes, check with your doctor before drinking it daily.</div></section>`;
+
+/* ---- Recipes ---- */
+const RECIPES=[
+['Hibiscus Iced Cooler',glass('#d6203f','#f7b6c2','lemon'),'10 min + chilling','4 hibiscus tea bags|1 litre hot water|4 tbsp honey or sugar|1 lemon|Ice cubes','Steep the tea bags in hot water for 5 minutes.|Remove the bags, stir in honey, cool for 15 minutes.|Add lemon slices, pour over ice, serve.'],
+['Pudina Mojito',glass('#9c1038','#f7b6c2','mint'),'8 min','2 tea bags|Fresh pudina leaves|1 lime|Soda water|Ice','Brew a strong 200 ml cup and let it cool.|Crush pudina with lime juice in a glass.|Add ice, pour tea, top with soda.'],
+['Gulab Hibiscus Sharbat',glass('#e0587a','#fbd5dc','flower'),'10 min','3 tea bags|1 tbsp rose syrup|Cold milk or water|Ice','Brew tea with 300 ml water, cool completely.|Mix in rose syrup.|Serve over ice. For a creamy version, add a splash of cold milk.'],
+['Winter Ginger Hibiscus',cup('#a8281c','',false),'7 min','1 ginger hibiscus tea bag|Honey|A small piece of fresh adrak','Add a few adrak slices to boiling water.|Pour over the tea bag, steep 7 minutes.|Stir in honey and enjoy hot.']];
+pages.recipes=()=>`<section class="pg"><h2>Recipes</h2><p>Tap a recipe to open it.</p>${RECIPES.map(([n,s,t,i,st],x)=>`<details class="acc" ${x?'':'open'}><summary>${n} <span class="tag">${t}</span></summary><div class="two" style="margin-top:12px"><div style="width:130px;margin:auto">${s}</div><div><b>You need</b><ul>${i.split('|').map(a=>`<li>${a}</li>`).join('')}</ul><b>Method</b><ol>${st.split('|').map(a=>`<li>${a}</li>`).join('')}</ol></div></div></details>`).join('')}</section>`;
+
+/* ---- Quiz ---- */
+const QZ=[['What sounds best right now?',[['Something zesty',1],['Cool and calming',2],['Sweet and cozy',3],['Soft and floral',4]]],['When will you drink it?',[['Morning',1],['After lunch',2],['Evening',3],['Late at night',4]]],['What is the weather like?',[['Hot summer day',2],['Cold winter night',5],['Rainy afternoon',3],['Any day, keep it classic',0]]]];
+pages.quiz=()=>`<section class="pg"><div class="form" style="max-width:520px;text-align:center" id="qb"></div></section>`;
+after.quiz=()=>{let i=0;const v=[];const draw=()=>{if(i<QZ.length){const[q,o]=QZ[i];$('#qb').innerHTML=`<small>Question ${i+1} of ${QZ.length}</small><h2>${q}</h2>${o.map(([t,k])=>`<p><button class="btn alt" style="width:100%" data-k="${k}">${t}</button></p>`).join('')}`}
+  else{const c={};v.forEach(k=>c[k]=(c[k]||0)+1);const w=+Object.keys(c).sort((a,b)=>c[b]-c[a]||v.indexOf(+a)-v.indexOf(+b))[0],t=TEAS[w];
+   $('#qb').innerHTML=`<h2>Your match: ${t.n}</h2><div style="width:200px;margin:auto">${cup(t.c,'',true)}</div><p>${t.d}</p><p><button class="btn" onclick="add('${t.n}')">Add to cart</button> <button class="btn alt" id="qr">Try again</button></p>`;$('#qr').onclick=()=>{i=0;v.length=0;draw()}}};
+ $('#qb').onclick=e=>{const b=e.target.closest('[data-k]');if(!b)return;v.push(+b.dataset.k);i++;draw()};draw()};
+
+/* ---- Reviews ---- */
+const REVIEWS=[{n:'Ayesha K.',c:'Lahore',s:5,t:'The lemon hibiscus iced is now my exam-week drink. Tangy and no caffeine headache.'},{n:'Hamza R.',c:'Islamabad',s:5,t:'Ordered the Family Chai Time pack for my mother. The packaging was beautiful.'},{n:'Sana M.',c:'Karachi',s:4,t:'Rose hibiscus smells amazing. I would like a bigger pack size.'},{n:'Bilal A.',c:'Mianwali',s:5,t:'Ginger hibiscus is perfect in the cold mornings here.'}];
+const revCard=r=>`<div class="card" style="text-align:left"><div class="stars">${star(r.s)}</div><p>${r.t}</p><b>${r.n}</b> <small>${r.c}</small></div>`;
+pages.reviews=()=>{const mine=JSON.parse(localStorage.ht_reviews||'[]');return `<section class="pg"><h2>Customer reviews</h2><p><small>The first four are sample reviews for this demo.</small></p><div class="grid">${[...mine,...REVIEWS].map(revCard).join('')}</div>
+<div class="form" style="max-width:520px"><h3>Write a review</h3><label>Rating</label><select id="rs">${[5,4,3,2,1].map(n=>`<option value="${n}">${star(n)}</option>`).join('')}</select><label for="rt">Your review</label><textarea id="rt" rows="3"></textarea><p style="margin-top:14px"><button class="btn" id="rb2">Post review</button></p><div class="msg" id="rm"></div></div></section>`};
+after.reviews=()=>$('#rb2').onclick=()=>{const t=$('#rt').value.trim();if(t.length<10)return $('#rm').textContent='Write at least 10 characters.';const m=store.me(),a=JSON.parse(localStorage.ht_reviews||'[]');a.unshift({n:m.name,c:'You',s:+$('#rs').value,t});localStorage.ht_reviews=JSON.stringify(a);toast('Review posted');route()};
+
+/* ---- FAQ ---- */
+pages.faq=()=>`<section class="pg"><h2>Frequently asked questions</h2>${[['Is hibiscus tea caffeine-free?','Yes. It is made from flowers, not tea leaves, so it has no caffeine.'],['How should I store it?','Keep it in its sealed tin or pouch, away from sunlight and moisture. Use within 12 months.'],['Can I drink it cold?','Yes. Brew it strong, let it cool, and pour over ice. See our Cold Drinks page.'],['How long should I steep it?','Between 4 and 7 minutes depending on flavour. Use the timer on the How to Brew page.'],['Do you deliver across Pakistan?','Yes, in this project delivery costs Rs 200, and is free above Rs 3,000.'],['Can I make my own gift pack?','Yes. Use the Customize page to choose the shape, colour and name.'],['Is it safe for everyone?','Most adults can enjoy it. If you are pregnant or on blood pressure medicine, ask your doctor first.']].map(([q,a])=>`<details class="acc"><summary>${q}</summary><p style="margin-top:8px">${a}</p></details>`).join('')}</section>`;
+
+/* ---- Contact ---- */
+pages.contact=()=>`<section class="pg"><h2>Contact us</h2><div class="two" style="align-items:start"><div class="card" style="text-align:left"><h3>Say hello</h3><p>Questions about orders, bulk gifting or cafe partnerships? Send us a message.</p><div class="row"><span>Email</span><b>hello@hibiscustea.example</b></div><div class="row"><span>Based in</span><b>Mianwali, Punjab</b></div><div class="row"><span>Hours</span><b>Mon to Sat, 10am to 6pm</b></div><p><small>Contact details are placeholders for this student project.</small></p></div>
+<div class="form" style="margin:0"><label for="cn2">Subject</label><select id="cn2"><option>Order help</option><option>Bulk or gift order</option><option>Cafe or retail partnership</option><option>Feedback</option></select><label for="cm2">Message</label><textarea id="cm2" rows="4"></textarea><p style="margin-top:14px"><button class="btn" id="cb">Send message</button></p><div class="msg" id="cmm"></div></div></div></section>`;
+after.contact=()=>$('#cb').onclick=()=>{const t=$('#cm2').value.trim();if(t.length<10)return $('#cmm').textContent='Write at least 10 characters so we can help.';const a=JSON.parse(localStorage.ht_msgs||'[]');a.push({s:$('#cn2').value,t});localStorage.ht_msgs=JSON.stringify(a);$('#cm2').value='';$('#cmm').className='msg ok';$('#cmm').textContent='Message sent. We will reply within 2 days.'};
+
+/* ---- Profile additions ---- */
+function accountHTML(m){const p=m.points||0,w=wl();return `<h3 style="margin-top:22px">My account</h3><div class="row"><span>Petal points</span><b>${p} (${tier(p)})</b></div><div class="row"><span>Subscription</span><b>${m.plan||'None'}</b></div><div class="row"><span>Wishlist</span><b>${w.length?w.join(', '):'Empty. Tap the heart on a tea.'}</b></div><h3 style="margin-top:18px">My orders</h3>${(m.orders||[]).length?m.orders.slice(0,5).map(o=>`<div class="row"><span>${o.id} <small>${o.date}</small></span><b>${rs(o.total)}</b></div>`).join(''):'<p>No orders yet.</p>'}`}
 
 /* ---------- Router ---------- */
 function route(){
